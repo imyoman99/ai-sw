@@ -56,17 +56,17 @@ async function fetchProjects() {
   try {
     const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
     if (!res.ok) throw new Error(`API 통신 에러: ${res.status}`);
-    
+
     const data = await res.json();
     STATE.projects.data = data;
     STATE.projects.status = data.length === 0 ? 'empty' : 'success';
-    
+
     renderFilters();
   } catch (error) {
     STATE.projects.status = 'error';
     STATE.projects.errorMsg = error.message;
   }
-  
+
   renderProjects(); // 성공/실패 UI 렌더링
 }
 
@@ -74,8 +74,8 @@ async function fetchProjects() {
 function renderFilters() {
   if (STATE.projects.status !== 'success') return;
   const langs = ['All', ...new Set(STATE.projects.data.map(p => p.language).filter(Boolean))];
-  
-  els.filters.innerHTML = langs.map(lang => 
+
+  els.filters.innerHTML = langs.map(lang =>
     `<button class="filter-btn ${STATE.projects.filter === lang ? 'active' : ''}" data-lang="${lang}">${lang}</button>`
   ).join('');
 
@@ -106,7 +106,7 @@ function renderProjects() {
 
   // 성공 상태 처리 (필터링 -> HTML 변환)
   const filteredData = filter === 'All' ? data : data.filter(p => p.language === filter);
-  
+
   els.projContainer.innerHTML = filteredData.map(repo => {
     const { name, description, html_url, stargazers_count, language } = repo;
     return `
