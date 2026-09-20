@@ -1,4 +1,4 @@
-const GITHUB_USERNAME = 'facebook'; // 본인 아이디로 변경
+const GITHUB_USERNAME = 'imyoman99'; // 본인 아이디로 변경
 
 // 1. 상태 관리 객체 (이 프로젝트의 두뇌)
 // 파편화된 변수를 하나로 모아 상태 추적을 용이하게 합니다.

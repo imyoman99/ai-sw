@@ -215,22 +215,21 @@ header.scrolled {
   text-align: center;
 }
 
-.about-image-placeholder {
+/* [수정됨] 프로필 이미지 스타일 추가 */
+.profile-img {
   width: 100%;
   max-width: 300px;
-  aspect-ratio: 1/1;
-  background-color: var(--bg-light);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-}
+  aspect-ratio: 1 / 1;
+  /* 1:1 정방형 비율 유지 */
 
-.about-image-placeholder i {
-  font-size: 5rem;
-  color: var(--text-secondary);
+  /* 핵심 속성: 비율을 유지하면서 1:1 영역에 꽉 차게 맞춤 */
+  object-fit: cover;
+
+  border-radius: 10px;
+  /* 기존의 둥근 모서리 유지 */
+  border: 1px solid var(--border-color);
+  margin: 0 auto;
+  display: block;
 }
 
 .skills-list {
