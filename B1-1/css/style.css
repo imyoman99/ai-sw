@@ -1,171 +1,264 @@
 /* 기존 :root 변수 설정 등은 위쪽과 동일하게 유지합니다 */
 :root {
   --bg-color: #ffffff;
+  /* 페이지의 기본 배경색 */
   --bg-light: #f8f9fa;
+  /* 밝은 배경이 필요한 영역의 색상 */
   --text-primary: #333333;
+  /* 가장 중요한 본문 글자색 */
   --text-secondary: #666666;
+  /* 보조 설명 글자색 */
   --primary-color: #007bff;
+  /* 버튼과 강조 요소의 기본 색상 */
   --primary-hover: #0056b3;
+  /* 기본 색상 요소에 마우스를 올렸을 때의 색상 */
   --border-color: #e9ecef;
+  /* 테두리에 사용할 연한 색상 */
   --card-bg: #ffffff;
+  /* 카드와 입력창의 배경색 */
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* 요소 아래에 표시할 그림자 */
   --focus-color: #0056b3;
+  /* 키보드 포커스와 입력 포커스의 강조색 */
   --error-color: #c62828;
+  /* 오류 상태를 표시하는 색상 */
   --success-color: #2e7d32;
+  /* 성공 상태를 표시하는 색상 */
   --success-bg: #edf7ee;
+  /* 성공 메시지의 배경색 */
   --transition: all 0.3s ease;
+  /* 상태 변화에 적용할 부드러운 전환 */
 }
 
 [data-theme="dark"] {
   --bg-color: #121212;
+  /* 다크 모드의 기본 배경색 */
   --bg-light: #1e1e1e;
+  /* 다크 모드의 밝은 배경 영역 색상 */
   --text-primary: #f8f9fa;
+  /* 다크 모드의 주요 글자색 */
   --text-secondary: #cccccc;
+  /* 다크 모드의 보조 글자색 */
   --border-color: #333333;
+  /* 다크 모드의 테두리 색상 */
   --card-bg: #242424;
+  /* 다크 모드 카드와 입력창의 배경색 */
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  /* 다크 모드에서 더 진하게 보이는 그림자 */
   --focus-color: #80bfff;
+  /* 다크 모드의 포커스 강조색 */
   --error-color: #ff8a80;
+  /* 다크 모드의 오류 표시 색상 */
   --success-color: #81c784;
+  /* 다크 모드의 성공 표시 색상 */
   --success-bg: #1d3322;
+  /* 다크 모드 성공 메시지의 배경색 */
 }
 
 * {
   margin: 0;
+  /* 모든 요소의 바깥 여백 제거 */
   padding: 0;
+  /* 모든 요소의 안쪽 여백 제거 */
   box-sizing: border-box;
+  /* 모든 요소의 기본 마진과 패딩을 제거하고, 박스 모델을 border-box로 설정하여 패딩과 보더를 포함한 크기를 계산 */
 }
 
 html {
   scroll-behavior: smooth;
+  /* 앵커 이동을 부드럽게 처리 */
 }
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
+  /* 전체 페이지에 사용할 글꼴 */
   background-color: var(--bg-color);
+  /* 현재 테마의 배경색 적용 */
   color: var(--text-primary);
+  /* 현재 테마의 주요 글자색 적용 */
   line-height: 1.6;
+  /* 줄 사이의 세로 간격 설정 */
   transition: var(--transition);
+  /* 테마 변경을 부드럽게 전환 */
 }
 
 a {
   text-decoration: none;
+  /* 링크의 기본 밑줄 제거 */
   color: inherit;
+  /* 링크 색상을 상속받도록 설정 */
 }
 
 ul {
   list-style: none;
+  /* ul의 기본 리스트 스타일 제거 */
 }
 
 .container {
   width: 90%;
+  /* 화면 너비의 90%를 콘텐츠 영역으로 사용 */
   max-width: 1200px;
+  /* 콘텐츠가 너무 넓어지지 않도록 최대 너비 제한 */
   margin: 0 auto;
+  /* 콘텐츠 영역을 가로 중앙에 배치 */
 }
 
 .section {
   padding: 5rem 0;
+  /* 섹션 간의 충분한 여백을 위해 상하 패딩 설정 */
   scroll-margin-top: 70px;
+  /* 고정 헤더에 가려지지 않도록 이동 위치 보정 */
 }
 
 a:focus-visible,
+/* 접근성 향상을 위해 포커스가 보이는 상태에서만 스타일 적용 */
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
   outline: 3px solid var(--focus-color);
+  /* 키보드 포커스를 보여주는 외곽선 */
   outline-offset: 3px;
+  /* 외곽선을 요소에서 3px 떨어뜨림 */
 }
 
 .section-title {
   text-align: center;
+  /* 섹션 제목을 가운데 정렬 */
   font-size: 2.5rem;
+  /* 섹션 제목의 글자 크기 */
   margin-bottom: 2rem;
+  /* 제목 아래 여백 */
 }
 
 .section-subtitle {
   text-align: center;
+  /* 설명 문장을 가운데 정렬 */
   color: var(--text-secondary);
+  /* 설명 문장을 보조 색상으로 표시 */
   margin-bottom: 2rem;
+  /* 설명 아래 여백 */
 }
 
 .bg-light {
   background-color: var(--bg-light);
+  /* 밝은 배경 변수를 적용 */
 }
 
 /* --- 모바일 기준 기본 스타일 (Mobile First) --- */
 header {
   position: fixed;
+  /* 헤더를 화면 상단에 고정 */
   top: 0;
+  /* 화면 위쪽에 붙임 */
   width: 100%;
+  /* 화면 전체 너비 사용 */
   height: 70px;
+  /* 헤더 높이를 70px로 설정 */
   background-color: transparent;
+  /* 초기에는 투명하게 설정 */
   transition: var(--transition);
+  /* 스크롤 상태 변화를 부드럽게 처리 */
   z-index: 1000;
+  /* 헤더가 다른 요소들 위에 표시되도록 설정 */
 }
 
 header.scrolled {
   background-color: var(--bg-color);
+  /* 스크롤 후 불투명한 배경 표시 */
   box-shadow: var(--shadow);
+  /* 스크롤 후 헤더 아래 그림자 표시 */
 }
 
 .nav-container {
   display: flex;
+  /* 로고와 메뉴를 Flexbox로 배치 */
   justify-content: space-between;
+  /* 로고와 메뉴를 양쪽 끝으로 배치 */
   align-items: center;
+  /* 세로 중앙 정렬 */
   height: 100%;
+  /* 헤더 높이에 맞춰 내부 높이 설정 */
 }
 
 .logo {
   font-size: 1.5rem;
+  /* 로고 글자 크기 */
   font-weight: bold;
+  /* 로고를 굵게 표시 */
 }
 
 /* 모바일 메뉴 스타일 (기본) */
 .nav-menu {
   position: absolute;
+  /* 모바일 메뉴는 절대 위치로 설정 */
   top: 70px;
+  /* 헤더 바로 아래에서 메뉴 시작 */
   left: 0;
+  /* 화면 왼쪽에 맞춤 */
   width: 100%;
+  /* 모바일 메뉴를 화면 전체 너비로 확장 */
   background-color: var(--bg-color);
+  /* 메뉴 배경색 */
   box-shadow: var(--shadow);
+  /* 메뉴 아래 그림자 */
   display: none;
+  /* 기본 상태에서는 모바일 메뉴 숨김 */
 }
 
 .nav-menu.active {
   display: block;
+  /* active 클래스가 있으면 메뉴 표시 */
 }
 
 .nav-list {
   display: flex;
+  /* 메뉴 항목을 Flexbox로 배치 */
   flex-direction: column;
+  /* 모바일에서는 메뉴를 세로로 나열 */
   text-align: center;
+  /* 메뉴 글자를 가운데 정렬 */
   padding: 1rem 0;
+  /* 메뉴 목록의 위아래 여백 */
 }
 
 .nav-link {
+  /* 모바일 메뉴 링크 스타일 */
   display: block;
+  /* 링크가 한 줄 전체를 클릭 영역으로 사용 */
   padding: 1rem;
+  /* 링크 내부 클릭 영역의 여백 */
 }
 
 .nav-link:hover {
+  /* 모바일 메뉴 링크 호버 스타일(메뉴 글자에 마우스를 올렸을 때 글자의 색상이나 배경색이 미세하게 바뀌는 시각적 효과) */
   color: var(--primary-color);
+  /* 마우스를 올린 메뉴 링크를 강조 */
 }
 
 .nav-controls {
+  /* 다크모드 토글 버튼과 햄버거 메뉴 버튼을 포함하는 컨테이너 */
   display: flex;
+  /* 제어 버튼을 가로로 배치 */
   gap: 1rem;
+  /* 제어 버튼 사이 간격 */
 }
 
 .nav-controls button {
   background: none;
+  /* 버튼의 배경 제거 */
   border: none;
+  /* 버튼의 기본 스타일 제거 */
   font-size: 1.5rem;
+  /* 아이콘 버튼의 글자 또는 아이콘 크기 */
   color: var(--text-primary);
+  /* 버튼 아이콘 색상 */
   cursor: pointer;
+  /* 클릭 가능한 포인터 커서 표시 */
 }
 
 #hamburger-btn {
   display: block;
+  /* 모바일에서 햄버거 버튼 표시 */
 }
 
 /* 모바일에서 햄버거 보임 */
@@ -173,290 +266,435 @@ header.scrolled {
 /* Hero */
 .hero-section {
   height: 100vh;
+  /* 영웅 영역을 화면 전체 높이로 설정 */
   display: flex;
+  /* 영웅 콘텐츠를 Flexbox로 배치 */
   align-items: center;
+  /* 영웅 콘텐츠를 세로 가운데 정렬 */
   text-align: center;
+  /* 영웅 텍스트를 가운데 정렬 */
 }
 
 .hero-content h1 {
   font-size: 2rem;
+  /* 모바일 영웅 제목 글자 크기 */
   margin-bottom: 1rem;
+  /* 제목 아래 여백 */
 }
 
 .highlight {
   color: var(--primary-color);
+  /* 강조 문장을 기본 강조색으로 표시 */
 }
 
 .hero-buttons {
   margin-top: 2rem;
+  /* 버튼 영역 위 여백 */
   display: flex;
+  /* 버튼을 Flexbox로 배치 */
   flex-direction: column;
+  /* 모바일에서 버튼을 세로로 배치 */
   gap: 1rem;
+  /* 버튼 사이 간격 */
 }
 
 .btn {
   padding: 0.8rem 1.5rem;
+  /* 버튼 안쪽 위아래와 좌우 여백 */
   border-radius: 5px;
+  /* 버튼 모서리를 살짝 둥글게 처리 */
   font-weight: bold;
+  /* 버튼 글자를 굵게 표시 */
   cursor: pointer;
+  /* 클릭 가능한 포인터 커서 표시 */
   transition: var(--transition);
+  /* 버튼 상태 변화를 부드럽게 처리 */
 }
 
 .btn-primary {
   background-color: var(--primary-color);
+  /* 기본 버튼 배경색 */
   color: white;
+  /* 기본 버튼 글자색 */
   border: 1px solid var(--primary-color);
+  /* 배경과 같은 색의 테두리 */
 }
 
 .btn-primary:hover {
   background-color: var(--primary-hover);
+  /* 마우스를 올리면 버튼을 더 진하게 표시 */
 }
 
 .btn-outline {
   background-color: transparent;
+  /* 외곽선 버튼의 투명한 배경 */
   color: var(--text-primary);
+  /* 외곽선 버튼의 글자색 */
   border: 1px solid var(--text-primary);
+  /* 글자색과 같은 외곽선 */
 }
 
 .btn-outline:hover {
   background-color: var(--text-primary);
+  /* 마우스를 올리면 버튼 배경 채움 */
   color: var(--bg-color);
+  /* 반전된 버튼 글자색 */
 }
 
 /* About & Skills */
 .about-content {
   display: flex;
+  /* 자기소개 콘텐츠를 Flexbox로 배치 */
   flex-direction: column;
+  /* 모바일에서 콘텐츠를 세로로 쌓음 */
   gap: 2rem;
+  /* 자기소개 열 사이 간격 */
   align-items: center;
+  /* 자기소개 콘텐츠를 가로 가운데 정렬 */
   text-align: center;
+  /* 모바일 자기소개 텍스트를 가운데 정렬 */
 }
 
 /* [수정됨] 프로필 이미지 스타일 추가 */
 .profile-img {
   width: 100%;
+  /* 부모 너비에 맞춰 이미지 확대 */
   max-width: 300px;
+  /* 이미지가 300px보다 커지지 않도록 제한 */
   aspect-ratio: 1 / 1;
+  /* 이미지 영역을 정사각형으로 고정 */
   /* 1:1 정방형 비율 유지 */
 
   /* 핵심 속성: 비율을 유지하면서 1:1 영역에 꽉 차게 맞춤 */
   object-fit: cover;
+  /* 비율을 유지하며 정사각형 영역을 가득 채움 */
 
   border-radius: 10px;
+  /* 이미지 모서리를 10px만큼 둥글게 처리 */
   /* 기존의 둥근 모서리 유지 */
   border: 1px solid var(--border-color);
+  /* 이미지 테두리 표시 */
   margin: 0 auto;
+  /* 이미지를 가로 가운데 정렬 */
   display: block;
+  /* 이미지 아래 불필요한 인라인 여백 제거 */
 }
 
 .skills-list {
   display: flex;
+  /* 기술 태그를 Flexbox로 나열 */
   flex-wrap: wrap;
+  /* 한 줄에 들어가지 않으면 다음 줄로 이동 */
   gap: 1rem;
+  /* 기술 태그 사이의 가로세로 간격 */
   justify-content: center;
+  /* 기술 태그 전체를 가운데 정렬 */
 }
 
 .skill-item {
   padding: 0.5rem 1.5rem;
+  /* 태그 내부의 위아래와 좌우 여백 */
   background-color: var(--card-bg);
+  /* 태그 배경색 */
   border: 1px solid var(--border-color);
+  /* 태그 테두리 */
   border-radius: 20px;
+  /* 태그를 캡슐 모양으로 둥글게 처리 */
 }
 
 /* Projects (Grid) */
 .projects-grid {
   display: grid;
+  /* 프로젝트 카드를 Grid로 배치 */
   grid-template-columns: 1fr;
+  /* 모바일에서는 한 열로 배치 */
   gap: 2rem;
+  /* 카드 사이의 간격 */
 }
 
 /* 모바일 1줄 */
 .project-card {
   background-color: var(--card-bg);
+  /* 카드 배경색 */
   border: 1px solid var(--border-color);
+  /* 카드 테두리 */
   border-radius: 10px;
+  /* 카드 모서리를 둥글게 처리 */
   padding: 1.5rem;
+  /* 카드 내부 여백 */
   display: flex;
+  /* 카드 내용을 Flexbox로 배치 */
   flex-direction: column;
+  /* 카드 내용을 세로로 쌓음 */
   transition: transform 0.3s ease;
+  /* 호버 이동을 부드럽게 처리 */
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  /* 마우스를 올리면 카드를 5px 위로 이동 */
 }
 
 .project-card h3 {
   margin-bottom: 0.5rem;
+  /* 카드 제목 아래 여백 */
 }
 
 .project-card p {
   color: var(--text-secondary);
+  /* 프로젝트 설명을 보조 색상으로 표시 */
   flex-grow: 1;
+  /* 남은 공간을 차지해 카드 높이 균형 유지 */
   margin-bottom: 1rem;
+  /* 설명 아래 여백 */
 }
 
 .project-meta {
   display: flex;
+  /* 프로젝트 메타 정보를 가로로 배치 */
   justify-content: space-between;
+  /* 메타 정보 양끝 정렬 */
   font-size: 0.9rem;
+  /* 메타 정보 글자 크기 */
   color: var(--text-secondary);
+  /* 메타 정보 보조 색상 */
   margin-top: 1rem;
+  /* 메타 정보 위 여백 */
 }
 
 .loading-state,
 .error-state,
 .empty-state {
   text-align: center;
+  /* 상태 안내 문구를 가운데 정렬 */
   padding: 3rem;
+  /* 상태 영역에 넉넉한 내부 여백 */
   color: var(--text-secondary);
+  /* 상태 안내 문구를 보조 색상으로 표시 */
 }
 
 /* Filters */
 .filters {
   display: flex;
+  /* 필터 버튼을 Flexbox로 배치 */
   justify-content: center;
+  /* 필터 버튼을 가운데 정렬 */
   gap: 0.5rem;
+  /* 필터 버튼 사이 간격 */
   margin-bottom: 2rem;
+  /* 필터 영역 아래 여백 */
   flex-wrap: wrap;
+  /* 좁은 화면에서 버튼 줄바꿈 허용 */
 }
 
 .filter-btn {
   padding: 0.3rem 1rem;
+  /* 필터 버튼 내부 여백 */
   border-radius: 15px;
+  /* 필터 버튼 모서리를 둥글게 처리 */
   border: 1px solid var(--border-color);
+  /* 필터 버튼 테두리 */
   background: var(--card-bg);
+  /* 필터 버튼 배경색 */
   color: var(--text-primary);
+  /* 필터 버튼 글자색 */
   cursor: pointer;
+  /* 클릭 가능한 포인터 커서 표시 */
 }
 
 .filter-btn.active {
   background: var(--primary-color);
+  /* 선택된 필터를 강조 색상으로 표시 */
   color: white;
+  /* 선택된 필터의 글자색 */
 }
 
 /* Contact Form */
 .contact-form {
   max-width: 600px;
+  /* 문의 폼의 최대 너비 제한 */
   margin: 0 auto;
+  /* 문의 폼을 가로 중앙에 배치 */
 }
 
 .form-group {
   margin-bottom: 1.5rem;
+  /* 입력 그룹 사이의 아래 여백 */
   text-align: left;
+  /* 라벨과 입력 내용을 왼쪽 정렬 */
 }
 
 .form-group label {
   display: block;
+  /* 라벨을 한 줄 전체에 배치 */
   margin-bottom: 0.5rem;
+  /* 라벨과 입력창 사이 여백 */
 }
 
 .form-group input,
 .form-group textarea {
   display: block;
+  /* 입력 요소를 블록 요소로 배치 */
   width: 100%;
+  /* 부모 너비 전체를 입력창으로 사용 */
   padding: 0.8rem;
+  /* 입력창 내부 여백 */
   font: inherit;
+  /* 페이지의 기본 글꼴과 크기 상속 */
   border: 1px solid var(--border-color);
+  /* 입력창 테두리 */
   border-radius: 5px;
+  /* 입력창 모서리를 살짝 둥글게 처리 */
   background-color: var(--card-bg);
+  /* 입력창 배경색 */
   color: var(--text-primary);
+  /* 입력한 글자의 색상 */
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--focus-color);
+  /* 포커스 시 입력창 테두리 강조 */
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-color) 20%, transparent);
+  /* 포커스 주변에 은은한 강조 그림자 표시 */
 }
 
 .form-group textarea {
   resize: vertical;
+  /* textarea를 세로 방향으로만 크기 조절 허용 */
 }
 
 .error-message {
   display: none;
+  /* 기본 상태에서는 오류 문구 숨김 */
   color: var(--error-color);
+  /* 오류 문구 색상 */
   font-size: 0.8rem;
+  /* 오류 문구 글자 크기 */
   line-height: 1.4;
+  /* 오류 문구 줄 간격 */
   margin-top: 0.3rem;
+  /* 입력창과 오류 문구 사이 여백 */
   margin-left: 0.35rem;
+  /* 오류 문구를 입력창 안쪽 기준으로 살짝 이동 */
 }
 
 .form-group.invalid .error-message {
   display: block;
+  /* invalid 상태에서 오류 문구 표시 */
 }
 
 .form-group.invalid input,
 .form-group.invalid textarea {
   border-color: var(--error-color);
+  /* 잘못된 입력창의 테두리를 오류색으로 표시 */
 }
 
 .success-message {
   display: none;
+  /* 기본 상태에서는 성공 문구 숨김 */
   color: var(--success-color);
+  /* 성공 문구 글자색 */
   background-color: var(--success-bg);
+  /* 성공 문구 배경색 */
   border: 1px solid var(--success-color);
+  /* 성공 문구 전체 테두리 */
   border-left-width: 4px;
+  /* 왼쪽 테두리를 더 두껍게 표시 */
   border-radius: 6px;
+  /* 성공 문구 상자 모서리 */
   padding: 0.75rem 1rem;
+  /* 성공 문구 내부 여백 */
   text-align: center;
+  /* 성공 문구를 가운데 정렬 */
   margin-top: 1rem;
+  /* 폼과 성공 문구 사이 여백 */
   font-weight: bold;
+  /* 성공 문구를 굵게 표시 */
 }
 
 .btn-block {
   width: 100%;
+  /* 버튼을 부모 영역 전체 너비로 확장 */
 }
 
 /* Footer & Top Btn & Animation */
 footer {
   text-align: center;
+  /* 푸터 내용을 가운데 정렬 */
   padding: 2rem 0;
+  /* 푸터의 위아래 여백 */
   background-color: var(--bg-light);
+  /* 푸터 배경색 */
   border-top: 1px solid var(--border-color);
+  /* 푸터 위쪽 구분선 */
 }
 
 .social-links a {
   margin: 0 0.5rem;
+  /* 소셜 링크 사이의 좌우 여백 */
   font-size: 1.5rem;
+  /* 소셜 아이콘 또는 글자 크기 */
 }
 
 #scroll-top {
   position: fixed;
+  /* 스크롤과 관계없이 화면에 고정 */
   bottom: 20px;
+  /* 화면 아래에서 20px 띄움 */
   right: 20px;
+  /* 화면 오른쪽에서 20px 띄움 */
   background-color: var(--primary-color);
+  /* 맨 위로 버튼 배경색 */
   color: white;
+  /* 맨 위로 버튼 아이콘 색상 */
   border: none;
+  /* 기본 버튼 테두리 제거 */
   border-radius: 50%;
+  /* 버튼을 원형으로 표시 */
   width: 40px;
+  /* 버튼 너비 */
   height: 40px;
+  /* 버튼 높이 */
   cursor: pointer;
+  /* 클릭 가능한 포인터 커서 표시 */
   opacity: 0;
+  /* 평소에는 투명하게 숨김 */
   pointer-events: none;
+  /* 숨겨진 상태에서는 클릭 차단 */
   transition: var(--transition);
+  /* 표시 상태 변화를 부드럽게 처리 */
 }
 
 #scroll-top.visible {
   opacity: 1;
+  /* visible 클래스가 있으면 버튼 표시 */
   pointer-events: auto;
+  /* 표시된 버튼의 클릭 허용 */
 }
 
 .fade-in {
   opacity: 0;
+  /* 등장 전 요소를 투명하게 설정 */
   transform: translateY(30px);
+  /* 등장 전 요소를 아래로 30px 이동 */
   transition: opacity 0.6s ease, transform 0.6s ease;
+  /* 투명도와 위치를 부드럽게 전환 */
 }
 
 .fade-in.appear {
   opacity: 1;
+  /* appear 클래스가 있으면 요소를 표시 */
   transform: translateY(0);
+  /* 원래 위치로 이동 */
 }
 
 
-/* --- 태블릿 & 데스크톱 (Min-Width : 768px 이상) --- */
+/* --- 태블릿 & 데스크탑 (Min-Width : 768px 이상) --- */
 @media (min-width: 768px) {
   #hamburger-btn {
     display: none;
+    /* 태블릿 이상에서는 햄버거 버튼 숨김 */
   }
 
   /* 데스크톱 햄버거 숨김 */
@@ -464,35 +702,49 @@ footer {
   /* 가로형 네비게이션으로 변경 */
   .nav-menu {
     display: block;
+    /* 데스크톱 메뉴를 항상 표시 */
     position: static;
+    /* 모바일용 절대 위치 해제 */
     background-color: transparent;
+    /* 데스크톱 메뉴 배경 투명화 */
     box-shadow: none;
+    /* 데스크톱 메뉴 그림자 제거 */
     width: auto;
+    /* 메뉴 내용에 맞춰 너비 자동 조절 */
   }
 
   .nav-list {
     flex-direction: row;
+    /* 데스크톱 메뉴를 가로로 나열 */
     padding: 0;
+    /* 데스크톱 메뉴의 목록 여백 제거 */
     gap: 1.5rem;
+    /* 메뉴 링크 사이 간격 */
   }
 
   .hero-content h1 {
     font-size: 3rem;
+    /* 태블릿 영웅 제목 크기 확대 */
   }
 
   .hero-buttons {
     flex-direction: row;
+    /* 태블릿 이상에서 버튼을 가로 배치 */
     justify-content: center;
+    /* 버튼 묶음을 가운데 정렬 */
   }
 
   .about-content {
     flex-direction: row;
+    /* 태블릿 이상에서 자기소개를 가로 배치 */
     text-align: left;
+    /* 자기소개 텍스트를 왼쪽 정렬 */
   }
 
   /* Grid의 꽃: 태블릿 이상부터 2~3줄 자동 맞춤 */
   .projects-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* 카드가 최소 300px을 유지하며 자동으로 여러 열 배치 */
   }
 }
 
@@ -500,17 +752,21 @@ footer {
 @media (min-width: 1024px) {
   .container {
     max-width: 1000px;
+    /* 데스크톱 콘텐츠 최대 너비를 1000px로 제한 */
   }
 
   .hero-content h1 {
     font-size: 4rem;
+    /* 데스크톱 영웅 제목 크기 확대 */
   }
 
   .nav-list {
     gap: 2.5rem;
+    /* 데스크톱 메뉴 링크 사이 간격 확대 */
   }
 
   .section {
     padding: 7rem 0;
+    /* 데스크톱 섹션의 위아래 여백 확대 */
   }
 }

@@ -1,51 +1,51 @@
-const GITHUB_USERNAME = 'imyoman99'; // 본인 아이디로 변경
+const GITHUB_USERNAME = 'imyoman99'; // GitHub 저장소를 가져올 사용자 아이디
 
 // 1. 상태 관리 객체 (이 프로젝트의 두뇌)
 // 파편화된 변수를 하나로 모아 상태 추적을 용이하게 합니다.
 const STATE = {
-  theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+  theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'), // 저장된 테마 또는 운영체제 테마
   projects: {
-    data: [],       // API로 받아온 원본 데이터
-    status: 'idle', // 'idle' | 'loading' | 'success' | 'error' | 'empty'
-    errorMsg: null,
-    filter: 'All'
+    data: [],       // GitHub API에서 받아온 원본 프로젝트 목록
+    status: 'idle', // 프로젝트 요청 상태: 대기, 로딩, 성공, 오류, 비어 있음('idle' | 'loading' | 'success' | 'error' | 'empty')
+    errorMsg: null, // API 오류 메시지를 저장할 변수
+    filter: 'All' // 현재 선택된 프로젝트 언어 필터
   }
 };
 
 // 2. DOM 요소 선택
 const els = {
-  header: document.getElementById('header'),
-  themeBtn: document.getElementById('theme-toggle'),
-  hamburger: document.getElementById('hamburger-btn'),
-  nav: document.querySelector('.nav-menu'),
-  scrollTop: document.getElementById('scroll-top'),
-  projContainer: document.getElementById('projects-container'),
-  filters: document.getElementById('project-filters'),
-  form: document.getElementById('contact-form')
+  header: document.getElementById('header'), // 고정 헤더 요소 선택
+  themeBtn: document.getElementById('theme-toggle'), // 테마 전환 버튼 선택
+  hamburger: document.getElementById('hamburger-btn'), // 모바일 메뉴 버튼 선택
+  nav: document.querySelector('.nav-menu'), // 네비게이션 메뉴 선택
+  scrollTop: document.getElementById('scroll-top'), // 맨 위로 이동 버튼 선택
+  projContainer: document.getElementById('projects-container'), // 프로젝트 출력 영역 선택
+  filters: document.getElementById('project-filters'), // 프로젝트 필터 출력 영역 선택
+  form: document.getElementById('contact-form') // 문의 폼 선택
 };
 
 // 3. 초기화 (앱 실행)
 function init() {
-  applyTheme(STATE.theme);
-  bindEvents();
-  fetchProjects();
+  applyTheme(STATE.theme); // 저장된 테마를 화면에 적용
+  bindEvents(); // 모든 버튼과 폼에 이벤트 연결
+  fetchProjects(); // GitHub 프로젝트 목록 요청 시작
 }
 
 function escapeHtml(value) {
-  return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
+  return String(value) // 전달받은 값을 문자열로 변환
+    .replaceAll('&', '&amp;') // 앰퍼샌드를 HTML 엔티티로 변환
+    .replaceAll('<', '&lt;') // 여는 꺾쇠를 HTML 엔티티로 변환
+    .replaceAll('>', '&gt;') // 닫는 꺾쇠를 HTML 엔티티로 변환
+    .replaceAll('"', '&quot;') // 큰따옴표를 HTML 엔티티로 변환
+    .replaceAll("'", '&#039;'); // 작은따옴표를 HTML 엔티티로 변환
 }
 
 function getSafeRepositoryUrl(value) {
   try {
-    const url = new URL(value);
-    return url.protocol === 'https:' && url.hostname === 'github.com' ? url.href : 'https://github.com';
+    const url = new URL(value); // 전달된 주소를 URL 객체로 분석
+    return url.protocol === 'https:' && url.hostname === 'github.com' ? url.href : 'https://github.com'; // GitHub HTTPS 주소만 허용
   } catch {
-    return 'https://github.com';
+    return 'https://github.com'; // 잘못된 주소는 안전한 기본 주소로 대체
   }
 }
 
@@ -55,30 +55,30 @@ function getSafeRepositoryUrl(value) {
 
 // [테마 관리] 이벤트 발생 -> 상태 변경 -> UI 렌더링
 function applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  const icon = els.themeBtn.querySelector('i');
-  icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  document.documentElement.setAttribute('data-theme', theme); // html 요소에 현재 테마 속성 설정
+  const icon = els.themeBtn.querySelector('i'); // 테마 버튼 안의 아이콘 선택
+  icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; // 현재 테마에 맞춰 아이콘 변경
 }
 
 // [API 연동] 상태 관리에 따른 비동기 처리
 async function fetchProjects() {
-  STATE.projects.status = 'loading';
-  STATE.projects.errorMsg = null;
-  els.filters.replaceChildren();
+  STATE.projects.status = 'loading'; // 프로젝트 상태를 로딩으로 변경
+  STATE.projects.errorMsg = null; // 이전 오류 메시지 초기화
+  els.filters.replaceChildren(); // 이전 필터 버튼 제거
   renderProjects(); // 로딩 UI 그리기
 
   try {
-    const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
-    if (!res.ok) throw new Error(`API 통신 에러: ${res.status}`);
+    const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`); // GitHub 저장소 API 호출
+    if (!res.ok) throw new Error(`API 통신 에러: ${res.status}`); // HTTP 응답이 실패하면 오류 메시지 출력 후 catch 구문으로 점프
 
-    const data = await res.json();
-    STATE.projects.data = data;
-    STATE.projects.status = data.length === 0 ? 'empty' : 'success';
+    const data = await res.json(); // 응답 본문을 JSON 데이터로 변환
+    STATE.projects.data = data; // 받아온 프로젝트 데이터를 상태에 저장
+    STATE.projects.status = data.length === 0 ? 'empty' : 'success'; // 데이터 개수에 따라 성공 또는 빈 상태 지정
 
-    renderFilters();
+    renderFilters(); // 성공한 프로젝트의 필터 버튼 생성
   } catch (error) {
-    STATE.projects.status = 'error';
-    STATE.projects.errorMsg = error.message;
+    STATE.projects.status = 'error'; // 요청 실패 상태 저장
+    STATE.projects.errorMsg = error.message; // 사용자에게 보여줄 오류 메시지 저장
   }
 
   renderProjects(); // 성공/실패 UI 렌더링
@@ -86,15 +86,15 @@ async function fetchProjects() {
 
 // 필터 클릭 이벤트 -> 상태(filter) 변경 -> UI 렌더링
 function renderFilters() {
-  if (STATE.projects.status !== 'success') return;
-  const langs = ['All', ...new Set(STATE.projects.data.map(p => p.language).filter(Boolean))];
+  if (STATE.projects.status !== 'success') return; // 성공 상태가 아니면 필터를 만들지 않음
+  const langs = ['All', ...new Set(STATE.projects.data.map(p => p.language).filter(Boolean))]; // 중복 없는 언어 필터 목록 생성
 
-  els.filters.innerHTML = langs.map(lang =>
-    `<button class="filter-btn ${STATE.projects.filter === lang ? 'active' : ''}" data-lang="${escapeHtml(lang)}">${escapeHtml(lang)}</button>`
-  ).join('');
+  els.filters.innerHTML = langs.map(lang => // 각 언어를 필터 버튼 HTML로 변환
+    `<button class="filter-btn ${STATE.projects.filter === lang ? 'active' : ''}" data-lang="${escapeHtml(lang)}">${escapeHtml(lang)}</button>` // 현재 필터에는 active 클래스 적용
+  ).join(''); // 생성한 버튼 HTML을 하나의 문자열로 결합
 
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.querySelectorAll('.filter-btn').forEach(btn => { // 생성된 모든 필터 버튼 순회
+    btn.addEventListener('click', (e) => { // 필터 버튼 클릭 이벤트 연결
       STATE.projects.filter = e.currentTarget.dataset.lang; // 상태 업데이트
       renderFilters();  // 버튼 액티브 상태 재렌더링
       renderProjects(); // 프로젝트 리스트 재렌더링
@@ -103,28 +103,29 @@ function renderFilters() {
 }
 
 function renderProjects() {
-  const { data, status, errorMsg, filter } = STATE.projects;
+  const { data, status, errorMsg, filter } = STATE.projects; // 프로젝트 상태 정보를 구조 분해로 가져옴
 
   if (status === 'loading') {
-    els.projContainer.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin fa-2x"></i><p>불러오는 중...</p></div>`;
-    return;
+    els.projContainer.innerHTML = `<div class="loading-state"><i class="fas fa-spinner fa-spin fa-2x"></i><p>불러오는 중...</p></div>`; // 로딩 안내 UI 표시
+    return; // 로딩 상태에서는 아래 렌더링 중단
   }
   if (status === 'error') {
-    els.projContainer.innerHTML = `<div class="error-state"><p>에러 발생: ${escapeHtml(errorMsg)}</p><button class="btn btn-outline" data-action="retry-projects">재시도</button></div>`;
-    return;
+    els.projContainer.innerHTML = `<div class="error-state"><p>에러 발생: ${escapeHtml(errorMsg)}</p><button class="btn btn-outline" data-action="retry-projects">재시도</button></div>`; // 오류 메시지와 재시도 버튼 표시
+    return; // 오류 상태에서는 아래 렌더링 중단
   }
   if (status === 'empty') {
-    els.filters.replaceChildren();
-    els.projContainer.innerHTML = `<div class="empty-state">표시할 프로젝트가 없습니다.</div>`;
-    return;
+    els.filters.replaceChildren(); // 프로젝트가 없으면 필터 제거
+    els.projContainer.innerHTML = `<div class="empty-state">표시할 프로젝트가 없습니다.</div>`; // 빈 목록 안내 UI 표시
+    return; // 빈 상태에서는 아래 렌더링 중단
   }
 
   // 성공 상태 처리 (필터링 -> HTML 변환)
-  const filteredData = filter === 'All' ? data : data.filter(p => p.language === filter);
+  const filteredData = filter === 'All' ? data : data.filter(p => p.language === filter); // 선택한 언어에 맞춰 프로젝트 필터링
 
-  els.projContainer.innerHTML = filteredData.map(repo => {
-    const { name, description, html_url, stargazers_count, language } = repo;
-    const safeUrl = escapeHtml(getSafeRepositoryUrl(html_url));
+  els.projContainer.innerHTML = filteredData.map(repo => { // 필터링된 프로젝트를 HTML 카드로 변환
+    const { name, description, html_url, stargazers_count, language } = repo; // 저장소에서 화면에 필요한 값 추출
+    const safeUrl = escapeHtml(getSafeRepositoryUrl(html_url)); // 안전한 GitHub 주소로 변환 후 HTML 이스케이프
+    // 프로젝트 카드 HTML 반환
     return `
       <article class="project-card">
         <h3><a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(name)}</a></h3>
@@ -135,79 +136,79 @@ function renderProjects() {
         </div>
       </article>
     `;
-  }).join('');
+  }).join(''); // 모든 프로젝트 카드를 하나의 HTML 문자열로 결합
 }
 
 // ==========================================
 // 5. 기타 UI 이벤트 바인딩
 // ==========================================
 function bindEvents() {
-  els.themeBtn.addEventListener('click', () => {
-    STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', STATE.theme);
-    applyTheme(STATE.theme);
+  els.themeBtn.addEventListener('click', () => { // 테마 버튼 클릭 이벤트 연결
+    STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark'; // 현재 테마를 반대 테마로 변경
+    localStorage.setItem('theme', STATE.theme); // 선택한 테마를 브라우저에 저장
+    applyTheme(STATE.theme); // 변경된 테마를 화면에 적용
   });
 
   // 햄버거 메뉴
-  els.hamburger.addEventListener('click', () => els.nav.classList.toggle('active'));
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => els.nav.classList.remove('active'));
+  els.hamburger.addEventListener('click', () => els.nav.classList.toggle('active')); // 햄버거 클릭 시 메뉴 표시 상태 전환
+  document.querySelectorAll('.nav-link').forEach(link => { // 모든 네비게이션 링크 순회
+    link.addEventListener('click', () => els.nav.classList.remove('active')); // 링크 선택 후 모바일 메뉴 닫기
   });
 
-  els.projContainer.addEventListener('click', (e) => {
-    if (e.target.closest('[data-action="retry-projects"]')) fetchProjects();
+  els.projContainer.addEventListener('click', (e) => { // 프로젝트 영역의 클릭 이벤트 감시
+    if (e.target.closest('[data-action="retry-projects"]')) fetchProjects(); // 재시도 버튼이면 프로젝트 다시 요청
   });
 
   // 스크롤 이벤트
-  window.addEventListener('scroll', () => {
-    els.header.classList.toggle('scrolled', window.scrollY > 60);
-    els.scrollTop.classList.toggle('visible', window.scrollY > 300);
+  window.addEventListener('scroll', () => { // 화면 스크롤 이벤트 연결
+    els.header.classList.toggle('scrolled', window.scrollY > 60); // 60px 이상 스크롤하면 헤더 스타일 변경
+    els.scrollTop.classList.toggle('visible', window.scrollY > 300); // 300px 이상 스크롤하면 맨 위 버튼 표시
   });
-  els.scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  els.scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); // 클릭 시 페이지 최상단으로 부드럽게 이동
 
   // 스크롤 애니메이션
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('appear');
-        obs.unobserve(entry.target);
+  const observer = new IntersectionObserver((entries, obs) => { // 화면에 들어온 요소를 감지하는 관찰자 생성
+    entries.forEach(entry => { // 감지된 요소들을 순회
+      if (entry.isIntersecting) { // 요소가 화면에 보이면 실행
+        entry.target.classList.add('appear'); // 등장 애니메이션 클래스 추가
+        obs.unobserve(entry.target); // 한 번 나타난 요소는 관찰 중단
       }
     });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  }, { threshold: 0.2 }); // 요소의 20%가 보일 때 감지
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el)); // fade-in 요소 관찰 시작
 
   // 폼 유효성 검사 (Submit 및 Input 이벤트)
-  els.form.addEventListener('submit', validateForm);
-  els.form.querySelectorAll('input, textarea').forEach(input => {
-    input.addEventListener('input', () => input.parentElement.classList.remove('invalid'));
+  els.form.addEventListener('submit', validateForm); // 폼 제출 시 유효성 검사 실행
+  els.form.querySelectorAll('input, textarea').forEach(input => { // 모든 입력 요소 순회
+    input.addEventListener('input', () => input.parentElement.classList.remove('invalid')); // 입력을 다시 시작하면 오류 표시 제거
   });
 }
 
 function validateForm(e) {
-  e.preventDefault();
-  let isValid = true;
-  const { name, email, message } = els.form.elements;
+  e.preventDefault(); // 브라우저의 기본 폼 제출과 페이지 이동 방지
+  let isValid = true; // 전체 입력이 유효한지 저장하는 변수
+  const { name, email, message } = els.form.elements; // 폼의 이름, 이메일, 메시지 입력 요소 추출
 
-  const checkValid = (field, condition) => {
-    if (condition) {
-      field.parentElement.classList.add('invalid');
-      isValid = false;
+  const checkValid = (field, condition) => { // 하나의 입력을 검사하는 공통 함수
+    if (condition) { // 입력값이 조건에 맞지 않으면
+      field.parentElement.classList.add('invalid'); // 입력 그룹에 오류 클래스 추가
+      isValid = false; // 전체 폼을 유효하지 않은 상태로 변경
     } else {
-      field.parentElement.classList.remove('invalid');
+      field.parentElement.classList.remove('invalid'); // 유효한 입력의 오류 클래스 제거
     }
   };
 
-  checkValid(name, name.value.trim() === '');
-  checkValid(email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value));
-  checkValid(message, message.value.trim() === '');
+  checkValid(name, name.value.trim() === ''); // 이름이 비어 있는지 검사
+  checkValid(email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)); // 이메일 형식이 올바른지 검사
+  checkValid(message, message.value.trim() === ''); // 메시지가 비어 있는지 검사
 
   if (isValid) {
-    const successMessage = document.getElementById('form-success');
-    successMessage.style.display = 'block';
-    els.form.reset();
-    setTimeout(() => successMessage.style.display = 'none', 3000);
+    const successMessage = document.getElementById('form-success'); // 성공 메시지 요소 선택
+    successMessage.style.display = 'block'; // 성공 메시지 표시
+    els.form.reset(); // 제출 후 입력값 초기화
+    setTimeout(() => successMessage.style.display = 'none', 4000); // 4초 후 성공 메시지 숨김
   }
 }
 
 // 앱 실행
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init); // HTML 로딩이 끝나면 앱 초기화
