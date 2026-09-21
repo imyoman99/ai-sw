@@ -1,7 +1,8 @@
 const GITHUB_USERNAME = 'imyoman99'; // GitHub 저장소를 가져올 사용자 아이디
 
-// 1. 상태 관리 객체 (이 프로젝트의 두뇌)
-// 파편화된 변수를 하나로 모아 상태 추적을 용이하게 합니다.
+// 앱 전체 상태를 한 곳에 모아 관리합니다.
+// 화면 렌더링은 이 상태를 기준으로만 동작하도록 구성되어 있어
+// 데이터 흐름을 추적하기 쉽고, UI 갱신 시점도 명확해집니다.
 const STATE = {
   theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'), // 저장된 테마 또는 운영체제 테마
   projects: {
@@ -12,7 +13,8 @@ const STATE = {
   }
 };
 
-// 2. DOM 요소 선택
+// 반복해서 사용할 DOM 요소를 미리 캐싱합니다.
+// 매번 document.querySelector를 호출하지 않아도 되므로 코드가 간결해집니다.
 const els = {
   header: document.getElementById('header'), // 고정 헤더 요소 선택
   themeBtn: document.getElementById('theme-toggle'), // 테마 전환 버튼 선택
@@ -24,13 +26,16 @@ const els = {
   form: document.getElementById('contact-form') // 문의 폼 선택
 };
 
-// 3. 초기화 (앱 실행)
+// 앱 시작 시 한 번만 실행되는 초기화 함수입니다.
+// 테마 적용, 이벤트 바인딩, 프로젝트 데이터 요청을 순서대로 처리합니다.
 function init() {
   applyTheme(STATE.theme); // 저장된 테마를 화면에 적용
   bindEvents(); // 모든 버튼과 폼에 이벤트 연결
   fetchProjects(); // GitHub 프로젝트 목록 요청 시작
 }
 
+// 외부 API 값이나 사용자 입력값을 그대로 HTML에 넣지 않도록 문자열을 이스케이프합니다.
+// XSS 위험을 낮추기 위한 기본적인 방어 장치입니다.
 function escapeHtml(value) {
   return String(value) // 전달받은 값을 문자열로 변환
     .replaceAll('&', '&amp;') // 앰퍼샌드를 HTML 엔티티로 변환
@@ -40,6 +45,8 @@ function escapeHtml(value) {
     .replaceAll("'", '&#039;'); // 작은따옴표를 HTML 엔티티로 변환
 }
 
+// GitHub 저장소 URL이 안전한 형식인지 검사합니다.
+// github.com HTTPS 주소만 허용하고, 그 외 값은 기본 주소로 되돌립니다.
 function getSafeRepositoryUrl(value) {
   try {
     const url = new URL(value); // 전달된 주소를 URL 객체로 분석
@@ -53,14 +60,16 @@ function getSafeRepositoryUrl(value) {
 // 4. 이벤트 -> 상태 변경 -> 렌더링 패턴
 // ==========================================
 
-// [테마 관리] 이벤트 발생 -> 상태 변경 -> UI 렌더링
+// 현재 테마를 문서 루트에 반영합니다.
+// CSS 변수 기반 테마가 이 속성을 보고 색상을 바꿉니다.
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme); // html 요소에 현재 테마 속성 설정
   const icon = els.themeBtn.querySelector('i'); // 테마 버튼 안의 아이콘 선택
   icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; // 현재 테마에 맞춰 아이콘 변경
 }
 
-// [API 연동] 상태 관리에 따른 비동기 처리
+// GitHub API에서 공개 저장소 목록을 가져옵니다.
+// 요청 상태를 업데이트하고, 결과에 따라 프로젝트 목록과 필터를 다시 렌더링합니다.
 async function fetchProjects() {
   STATE.projects.status = 'loading'; // 프로젝트 상태를 로딩으로 변경
   STATE.projects.errorMsg = null; // 이전 오류 메시지 초기화
@@ -81,10 +90,12 @@ async function fetchProjects() {
     STATE.projects.errorMsg = error.message; // 사용자에게 보여줄 오류 메시지 저장
   }
 
-  renderProjects(); // 성공/실패 UI 렌더링
+  // 로딩 상태를 벗어나 최종 결과 UI를 렌더링합니다.
+  renderProjects();
 }
 
-// 필터 클릭 이벤트 -> 상태(filter) 변경 -> UI 렌더링
+// 프로젝트 언어별 필터 버튼을 동적으로 만듭니다.
+// 현재 선택된 필터는 active 클래스로 시각적으로 표시합니다.
 function renderFilters() {
   if (STATE.projects.status !== 'success') return; // 성공 상태가 아니면 필터를 만들지 않음
   const langs = ['All', ...new Set(STATE.projects.data.map(p => p.language).filter(Boolean))]; // 중복 없는 언어 필터 목록 생성
@@ -102,6 +113,8 @@ function renderFilters() {
   });
 }
 
+// 프로젝트 섹션의 실제 내용을 렌더링합니다.
+// 상태값에 따라 로딩, 오류, 빈 목록, 정상 목록을 각각 다르게 표시합니다.
 function renderProjects() {
   const { data, status, errorMsg, filter } = STATE.projects; // 프로젝트 상태 정보를 구조 분해로 가져옴
 
@@ -142,6 +155,9 @@ function renderProjects() {
 // ==========================================
 // 5. 기타 UI 이벤트 바인딩
 // ==========================================
+
+  // 테마, 네비게이션, 스크롤, 폼 검증 같은 UI 이벤트를 한곳에 묶습니다.
+  // 이렇게 하면 이벤트가 흩어지지 않아 유지보수가 쉬워집니다.
 function bindEvents() {
   els.themeBtn.addEventListener('click', () => { // 테마 버튼 클릭 이벤트 연결
     STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark'; // 현재 테마를 반대 테마로 변경
@@ -184,6 +200,8 @@ function bindEvents() {
   });
 }
 
+  // 폼 검증 로직입니다.
+  // 이름, 이메일, 메시지의 필수 여부를 확인한 뒤, 유효하면 성공 메시지를 잠깐 보여줍니다.
 function validateForm(e) {
   e.preventDefault(); // 브라우저의 기본 폼 제출과 페이지 이동 방지
   let isValid = true; // 전체 입력이 유효한지 저장하는 변수

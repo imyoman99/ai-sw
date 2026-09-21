@@ -1,5 +1,9 @@
-/* 기존 :root 변수 설정 등은 위쪽과 동일하게 유지합니다 */
+/*
+  전역 색상과 인터랙션 값을 CSS 변수로 정의합니다.
+  테마 전환은 data-theme 속성만 바꾸면 전체 색상이 따라 바뀌도록 설계되어 있습니다.
+*/
 :root {
+  /* 기본 배경색 */
   --bg-color: #ffffff;
   /* 페이지의 기본 배경색 */
   --bg-light: #f8f9fa;
@@ -30,6 +34,7 @@
   /* 상태 변화에 적용할 부드러운 전환 */
 }
 
+/* 다크 테마일 때는 색상 변수만 바꿔 전체 UI가 자동으로 전환되게 합니다. */
 [data-theme="dark"] {
   --bg-color: #121212;
   /* 다크 모드의 기본 배경색 */
@@ -55,6 +60,7 @@
   /* 다크 모드 성공 메시지의 배경색 */
 }
 
+/* 브라우저 기본 여백을 제거하고, 요소 크기 계산을 예측 가능하게 만듭니다. */
 * {
   margin: 0;
   /* 모든 요소의 바깥 여백 제거 */
@@ -64,11 +70,13 @@
   /* 모든 요소의 기본 마진과 패딩을 제거하고, 박스 모델을 border-box로 설정하여 패딩과 보더를 포함한 크기를 계산 */
 }
 
+/* 부드러운 앵커 이동을 적용합니다. */
 html {
   scroll-behavior: smooth;
   /* 앵커 이동을 부드럽게 처리 */
 }
 
+/* 전체 페이지의 기본 타이포그래피와 배경, 전환 효과를 정의합니다. */
 body {
   font-family: 'Noto Sans KR', sans-serif;
   /* 전체 페이지에 사용할 글꼴 */
@@ -82,6 +90,7 @@ body {
   /* 테마 변경을 부드럽게 전환 */
 }
 
+/* 모든 링크는 기본 밑줄을 제거하고 상속 색상을 사용합니다. */
 a {
   text-decoration: none;
   /* 링크의 기본 밑줄 제거 */
@@ -89,11 +98,13 @@ a {
   /* 링크 색상을 상속받도록 설정 */
 }
 
+/* 리스트 점을 제거하여 내비게이션과 기술 목록을 깔끔하게 만듭니다. */
 ul {
   list-style: none;
   /* ul의 기본 리스트 스타일 제거 */
 }
 
+/* 콘텐츠 폭을 제한해 읽기 좋은 중앙 정렬 레이아웃을 유지합니다. */
 .container {
   width: 90%;
   /* 화면 너비의 90%를 콘텐츠 영역으로 사용 */
@@ -103,6 +114,7 @@ ul {
   /* 콘텐츠 영역을 가로 중앙에 배치 */
 }
 
+/* 각 섹션에 충분한 여백을 주고, 앵커 이동 시 헤더에 가리지 않도록 합니다. */
 .section {
   padding: 5rem 0;
   /* 섹션 간의 충분한 여백을 위해 상하 패딩 설정 */
@@ -110,6 +122,7 @@ ul {
   /* 고정 헤더에 가려지지 않도록 이동 위치 보정 */
 }
 
+/* 키보드 사용자도 현재 초점을 쉽게 알 수 있도록 포커스 윤곽선을 제공합니다. */
 a:focus-visible,
 /* 접근성 향상을 위해 포커스가 보이는 상태에서만 스타일 적용 */
 button:focus-visible,
@@ -121,6 +134,7 @@ textarea:focus-visible {
   /* 외곽선을 요소에서 3px 떨어뜨림 */
 }
 
+/* 섹션 제목은 중앙 정렬로 시각적 기준점을 만듭니다. */
 .section-title {
   text-align: center;
   /* 섹션 제목을 가운데 정렬 */
@@ -130,6 +144,7 @@ textarea:focus-visible {
   /* 제목 아래 여백 */
 }
 
+/* 섹션 설명 문장은 보조 색상으로 정보 계층을 낮춥니다. */
 .section-subtitle {
   text-align: center;
   /* 설명 문장을 가운데 정렬 */
@@ -139,12 +154,16 @@ textarea:focus-visible {
   /* 설명 아래 여백 */
 }
 
+/* 배경색이 다른 구역을 쉽게 구분하기 위한 클래스입니다. */
 .bg-light {
   background-color: var(--bg-light);
   /* 밝은 배경 변수를 적용 */
 }
 
-/* --- 모바일 기준 기본 스타일 (Mobile First) --- */
+/* =============================
+   헤더와 내비게이션
+   모바일 우선으로 설계하고, 화면이 넓어지면 데스크톱 레이아웃으로 전환합니다.
+   ============================= */
 header {
   position: fixed;
   /* 헤더를 화면 상단에 고정 */
@@ -162,6 +181,7 @@ header {
   /* 헤더가 다른 요소들 위에 표시되도록 설정 */
 }
 
+/* 스크롤이 내려가면 헤더 배경과 그림자를 적용해 고정 헤더임을 강조합니다. */
 header.scrolled {
   background-color: var(--bg-color);
   /* 스크롤 후 불투명한 배경 표시 */
@@ -169,6 +189,7 @@ header.scrolled {
   /* 스크롤 후 헤더 아래 그림자 표시 */
 }
 
+/* 로고, 메뉴, 버튼들을 한 줄로 배치합니다. */
 .nav-container {
   display: flex;
   /* 로고와 메뉴를 Flexbox로 배치 */
@@ -180,6 +201,7 @@ header.scrolled {
   /* 헤더 높이에 맞춰 내부 높이 설정 */
 }
 
+/* 브랜드 이름의 시각적 위계를 조금 더 크게 잡습니다. */
 .logo {
   font-size: 1.5rem;
   /* 로고 글자 크기 */
@@ -187,7 +209,7 @@ header.scrolled {
   /* 로고를 굵게 표시 */
 }
 
-/* 모바일 메뉴 스타일 (기본) */
+/* 모바일에서는 메뉴를 펼침/접힘 가능한 패널처럼 표시합니다. */
 .nav-menu {
   position: absolute;
   /* 모바일 메뉴는 절대 위치로 설정 */
@@ -205,11 +227,13 @@ header.scrolled {
   /* 기본 상태에서는 모바일 메뉴 숨김 */
 }
 
+/* JS가 active 클래스를 붙이면 메뉴를 화면에 보여줍니다. */
 .nav-menu.active {
   display: block;
   /* active 클래스가 있으면 메뉴 표시 */
 }
 
+/* 모바일에서는 메뉴 항목을 세로로 배치합니다. */
 .nav-list {
   display: flex;
   /* 메뉴 항목을 Flexbox로 배치 */
@@ -221,6 +245,7 @@ header.scrolled {
   /* 메뉴 목록의 위아래 여백 */
 }
 
+/* 메뉴 링크는 탭 영역이 넓어지도록 블록 요소로 만듭니다. */
 .nav-link {
   /* 모바일 메뉴 링크 스타일 */
   display: block;
@@ -229,12 +254,14 @@ header.scrolled {
   /* 링크 내부 클릭 영역의 여백 */
 }
 
+/* 링크에 마우스를 올리면 브랜드 색으로 반응합니다. */
 .nav-link:hover {
   /* 모바일 메뉴 링크 호버 스타일(메뉴 글자에 마우스를 올렸을 때 글자의 색상이나 배경색이 미세하게 바뀌는 시각적 효과) */
   color: var(--primary-color);
   /* 마우스를 올린 메뉴 링크를 강조 */
 }
 
+/* 테마 토글과 햄버거 버튼을 가로로 배치합니다. */
 .nav-controls {
   /* 다크모드 토글 버튼과 햄버거 메뉴 버튼을 포함하는 컨테이너 */
   display: flex;
@@ -243,6 +270,7 @@ header.scrolled {
   /* 제어 버튼 사이 간격 */
 }
 
+/* 버튼 기본 스타일을 초기화하고 아이콘 버튼처럼 보이게 합니다. */
 .nav-controls button {
   background: none;
   /* 버튼의 배경 제거 */
@@ -256,14 +284,16 @@ header.scrolled {
   /* 클릭 가능한 포인터 커서 표시 */
 }
 
+/* 모바일에서는 햄버거 버튼을 보여주고, 데스크톱에서는 숨깁니다. */
 #hamburger-btn {
   display: block;
   /* 모바일에서 햄버거 버튼 표시 */
 }
 
-/* 모바일에서 햄버거 보임 */
-
-/* Hero */
+/* =============================
+   Hero 섹션
+   첫 인상과 핵심 메시지를 담는 가장 중요한 영역입니다.
+   ============================= */
 .hero-section {
   height: 100vh;
   /* 영웅 영역을 화면 전체 높이로 설정 */
@@ -275,6 +305,7 @@ header.scrolled {
   /* 영웅 텍스트를 가운데 정렬 */
 }
 
+/* 메인 헤드라인은 가장 큰 타이포그래피로 시선을 끕니다. */
 .hero-content h1 {
   font-size: 2rem;
   /* 모바일 영웅 제목 글자 크기 */
@@ -282,11 +313,13 @@ header.scrolled {
   /* 제목 아래 여백 */
 }
 
+/* 강조 단어를 브랜드 색으로 표시합니다. */
 .highlight {
   color: var(--primary-color);
   /* 강조 문장을 기본 강조색으로 표시 */
 }
 
+/* 행동 유도 버튼들을 세로로 배치해 모바일에서 누르기 쉽게 만듭니다. */
 .hero-buttons {
   margin-top: 2rem;
   /* 버튼 영역 위 여백 */
@@ -298,6 +331,7 @@ header.scrolled {
   /* 버튼 사이 간격 */
 }
 
+/* 모든 버튼에 공통되는 기본 여백과 둥근 모서리를 제공합니다. */
 .btn {
   padding: 0.8rem 1.5rem;
   /* 버튼 안쪽 위아래와 좌우 여백 */
@@ -311,6 +345,7 @@ header.scrolled {
   /* 버튼 상태 변화를 부드럽게 처리 */
 }
 
+/* 채워진 형태의 주요 행동 버튼입니다. */
 .btn-primary {
   background-color: var(--primary-color);
   /* 기본 버튼 배경색 */
@@ -320,11 +355,13 @@ header.scrolled {
   /* 배경과 같은 색의 테두리 */
 }
 
+/* hover 시 더 진한 색으로 바뀌어 클릭 가능성을 강조합니다. */
 .btn-primary:hover {
   background-color: var(--primary-hover);
   /* 마우스를 올리면 버튼을 더 진하게 표시 */
 }
 
+/* 테두리만 있는 보조 버튼입니다. */
 .btn-outline {
   background-color: transparent;
   /* 외곽선 버튼의 투명한 배경 */
@@ -334,6 +371,7 @@ header.scrolled {
   /* 글자색과 같은 외곽선 */
 }
 
+/* 보조 버튼도 hover 시 배경색이 채워집니다. */
 .btn-outline:hover {
   background-color: var(--text-primary);
   /* 마우스를 올리면 버튼 배경 채움 */
@@ -341,7 +379,10 @@ header.scrolled {
   /* 반전된 버튼 글자색 */
 }
 
-/* About & Skills */
+/* =============================
+   About / Skills
+   자기소개와 역량을 보여주는 정보성 영역입니다.
+   ============================= */
 .about-content {
   display: flex;
   /* 자기소개 콘텐츠를 Flexbox로 배치 */
@@ -355,7 +396,7 @@ header.scrolled {
   /* 모바일 자기소개 텍스트를 가운데 정렬 */
 }
 
-/* [수정됨] 프로필 이미지 스타일 추가 */
+/* 프로필 이미지를 정사각형 카드처럼 보이게 만듭니다. */
 .profile-img {
   width: 100%;
   /* 부모 너비에 맞춰 이미지 확대 */
@@ -367,11 +408,11 @@ header.scrolled {
 
   /* 핵심 속성: 비율을 유지하면서 1:1 영역에 꽉 차게 맞춤 */
   object-fit: cover;
-  /* 비율을 유지하며 정사각형 영역을 가득 채움 */
+
 
   border-radius: 10px;
   /* 이미지 모서리를 10px만큼 둥글게 처리 */
-  /* 기존의 둥근 모서리 유지 */
+
   border: 1px solid var(--border-color);
   /* 이미지 테두리 표시 */
   margin: 0 auto;
@@ -380,6 +421,7 @@ header.scrolled {
   /* 이미지 아래 불필요한 인라인 여백 제거 */
 }
 
+/* 기술 태그들은 여러 개가 자연스럽게 줄바꿈되도록 flex wrap을 사용합니다. */
 .skills-list {
   display: flex;
   /* 기술 태그를 Flexbox로 나열 */
@@ -391,6 +433,7 @@ header.scrolled {
   /* 기술 태그 전체를 가운데 정렬 */
 }
 
+/* 각 기술을 pill 형태로 보여줍니다. */
 .skill-item {
   padding: 0.5rem 1.5rem;
   /* 태그 내부의 위아래와 좌우 여백 */
@@ -402,7 +445,10 @@ header.scrolled {
   /* 태그를 캡슐 모양으로 둥글게 처리 */
 }
 
-/* Projects (Grid) */
+/* =============================
+   Projects
+   GitHub API 데이터를 카드형 그리드로 보여줍니다.
+   ============================= */
 .projects-grid {
   display: grid;
   /* 프로젝트 카드를 Grid로 배치 */
@@ -412,7 +458,7 @@ header.scrolled {
   /* 카드 사이의 간격 */
 }
 
-/* 모바일 1줄 */
+/* 개별 프로젝트 카드는 표면, 테두리, 그림자를 사용해 분리감을 줍니다. */
 .project-card {
   background-color: var(--card-bg);
   /* 카드 배경색 */
@@ -430,16 +476,19 @@ header.scrolled {
   /* 호버 이동을 부드럽게 처리 */
 }
 
+/* hover 시 카드가 살짝 떠오르며 인터랙션을 강조합니다. */
 .project-card:hover {
   transform: translateY(-5px);
   /* 마우스를 올리면 카드를 5px 위로 이동 */
 }
 
+/* 카드 제목은 링크와 함께 프로젝트 진입점 역할을 합니다. */
 .project-card h3 {
   margin-bottom: 0.5rem;
   /* 카드 제목 아래 여백 */
 }
 
+/* 설명 텍스트는 보조 색상으로 읽기 부담을 낮춥니다. */
 .project-card p {
   color: var(--text-secondary);
   /* 프로젝트 설명을 보조 색상으로 표시 */
@@ -449,6 +498,7 @@ header.scrolled {
   /* 설명 아래 여백 */
 }
 
+/* 카드 하단에는 언어와 스타 수 같은 메타 정보를 배치합니다. */
 .project-meta {
   display: flex;
   /* 프로젝트 메타 정보를 가로로 배치 */
@@ -462,6 +512,7 @@ header.scrolled {
   /* 메타 정보 위 여백 */
 }
 
+/* 로딩, 오류, 빈 상태는 같은 톤으로 중앙 정렬합니다. */
 .loading-state,
 .error-state,
 .empty-state {
@@ -473,7 +524,14 @@ header.scrolled {
   /* 상태 안내 문구를 보조 색상으로 표시 */
 }
 
-/* Filters */
+/* 에러 상태의 보조 메시지는 본문보다 작고 덜 강조되게 표시합니다. */
+.error-detail {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* 프로젝트 언어 필터 버튼 영역입니다. */
 .filters {
   display: flex;
   /* 필터 버튼을 Flexbox로 배치 */
@@ -487,6 +545,7 @@ header.scrolled {
   /* 좁은 화면에서 버튼 줄바꿈 허용 */
 }
 
+/* 필터 버튼은 토글 가능한 칩처럼 보이도록 디자인합니다. */
 .filter-btn {
   padding: 0.3rem 1rem;
   /* 필터 버튼 내부 여백 */
@@ -502,6 +561,7 @@ header.scrolled {
   /* 클릭 가능한 포인터 커서 표시 */
 }
 
+/* 선택된 필터는 브랜드 색으로 강조합니다. */
 .filter-btn.active {
   background: var(--primary-color);
   /* 선택된 필터를 강조 색상으로 표시 */
@@ -509,7 +569,10 @@ header.scrolled {
   /* 선택된 필터의 글자색 */
 }
 
-/* Contact Form */
+/* =============================
+   Contact Form
+   클라이언트 측 검증과 성공 메시지를 보여주는 폼입니다.
+   ============================= */
 .contact-form {
   max-width: 600px;
   /* 문의 폼의 최대 너비 제한 */
@@ -517,6 +580,7 @@ header.scrolled {
   /* 문의 폼을 가로 중앙에 배치 */
 }
 
+/* 각 입력 그룹은 라벨, 입력창, 오류 문구를 한 묶음으로 관리합니다. */
 .form-group {
   margin-bottom: 1.5rem;
   /* 입력 그룹 사이의 아래 여백 */
@@ -524,6 +588,7 @@ header.scrolled {
   /* 라벨과 입력 내용을 왼쪽 정렬 */
 }
 
+/* 라벨은 입력 요소와의 연결을 명확하게 보여줍니다. */
 .form-group label {
   display: block;
   /* 라벨을 한 줄 전체에 배치 */
@@ -531,6 +596,7 @@ header.scrolled {
   /* 라벨과 입력창 사이 여백 */
 }
 
+/* 입력 요소는 전체 폭을 사용해 모바일에서도 입력하기 쉽도록 합니다. */
 .form-group input,
 .form-group textarea {
   display: block;
@@ -551,6 +617,7 @@ header.scrolled {
   /* 입력한 글자의 색상 */
 }
 
+/* 포커스되면 테두리와 그림자로 현재 입력 위치를 명확히 표시합니다. */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--focus-color);
@@ -559,11 +626,13 @@ header.scrolled {
   /* 포커스 주변에 은은한 강조 그림자 표시 */
 }
 
+/* 메시지 입력창은 세로 길이만 조절 가능하게 해 레이아웃 깨짐을 막습니다. */
 .form-group textarea {
   resize: vertical;
   /* textarea를 세로 방향으로만 크기 조절 허용 */
 }
 
+/* 기본 상태에서는 오류 문구를 숨겨 둡니다. */
 .error-message {
   display: none;
   /* 기본 상태에서는 오류 문구 숨김 */
@@ -579,17 +648,20 @@ header.scrolled {
   /* 오류 문구를 입력창 안쪽 기준으로 살짝 이동 */
 }
 
+/* invalid 클래스가 붙은 항목에서만 오류 문구를 노출합니다. */
 .form-group.invalid .error-message {
   display: block;
   /* invalid 상태에서 오류 문구 표시 */
 }
 
+/* invalid 상태에서는 입력 테두리 색도 에러 색으로 바꿉니다. */
 .form-group.invalid input,
 .form-group.invalid textarea {
   border-color: var(--error-color);
   /* 잘못된 입력창의 테두리를 오류색으로 표시 */
 }
 
+/* 성공 메시지는 잠깐 나타났다가 사라지는 피드백 박스입니다. */
 .success-message {
   display: none;
   /* 기본 상태에서는 성공 문구 숨김 */
@@ -613,12 +685,16 @@ header.scrolled {
   /* 성공 문구를 굵게 표시 */
 }
 
+/* 버튼을 폼 폭에 맞게 넓혀 클릭하기 쉽게 만듭니다. */
 .btn-block {
   width: 100%;
   /* 버튼을 부모 영역 전체 너비로 확장 */
 }
 
-/* Footer & Top Btn & Animation */
+/* =============================
+   Footer / Scroll Top / Animation
+   페이지 마무리 요소와 시각적 전환 효과를 담당합니다.
+   ============================= */
 footer {
   text-align: center;
   /* 푸터 내용을 가운데 정렬 */
@@ -630,6 +706,7 @@ footer {
   /* 푸터 위쪽 구분선 */
 }
 
+/* 소셜 링크는 아이콘 기반으로 간단히 노출합니다. */
 .social-links a {
   margin: 0 0.5rem;
   /* 소셜 링크 사이의 좌우 여백 */
@@ -637,6 +714,7 @@ footer {
   /* 소셜 아이콘 또는 글자 크기 */
 }
 
+/* 상단 이동 버튼은 고정 위치에 두고, 기본적으로 숨겨 둡니다. */
 #scroll-top {
   position: fixed;
   /* 스크롤과 관계없이 화면에 고정 */
@@ -666,6 +744,7 @@ footer {
   /* 표시 상태 변화를 부드럽게 처리 */
 }
 
+/* 스크롤이 일정 이상 내려가면 JS가 visible 클래스를 붙여 노출합니다. */
 #scroll-top.visible {
   opacity: 1;
   /* visible 클래스가 있으면 버튼 표시 */
@@ -673,6 +752,7 @@ footer {
   /* 표시된 버튼의 클릭 허용 */
 }
 
+/* 아래에서 위로 올라오는 등장 애니메이션의 시작 상태입니다. */
 .fade-in {
   opacity: 0;
   /* 등장 전 요소를 투명하게 설정 */
@@ -682,6 +762,7 @@ footer {
   /* 투명도와 위치를 부드럽게 전환 */
 }
 
+/* IntersectionObserver가 appear를 붙이면 최종 상태로 전환됩니다. */
 .fade-in.appear {
   opacity: 1;
   /* appear 클래스가 있으면 요소를 표시 */
@@ -692,14 +773,14 @@ footer {
 
 /* --- 태블릿 & 데스크탑 (Min-Width : 768px 이상) --- */
 @media (min-width: 768px) {
+
+  /* 큰 화면에서는 햄버거 메뉴가 필요 없으므로 숨깁니다. */
   #hamburger-btn {
     display: none;
     /* 태블릿 이상에서는 햄버거 버튼 숨김 */
   }
 
-  /* 데스크톱 햄버거 숨김 */
-
-  /* 가로형 네비게이션으로 변경 */
+  /* 메뉴는 항상 보이는 가로형 내비게이션으로 바뀝니다. */
   .nav-menu {
     display: block;
     /* 데스크톱 메뉴를 항상 표시 */
@@ -713,6 +794,7 @@ footer {
     /* 메뉴 내용에 맞춰 너비 자동 조절 */
   }
 
+  /* 메뉴 항목을 한 줄로 나열합니다. */
   .nav-list {
     flex-direction: row;
     /* 데스크톱 메뉴를 가로로 나열 */
@@ -722,11 +804,13 @@ footer {
     /* 메뉴 링크 사이 간격 */
   }
 
+  /* 헤드라인 크기를 키워 대형 화면에서 임팩트를 높입니다. */
   .hero-content h1 {
     font-size: 3rem;
     /* 태블릿 영웅 제목 크기 확대 */
   }
 
+  /* 버튼도 가로 배치로 바뀌어 여유 있게 보입니다. */
   .hero-buttons {
     flex-direction: row;
     /* 태블릿 이상에서 버튼을 가로 배치 */
@@ -734,6 +818,7 @@ footer {
     /* 버튼 묶음을 가운데 정렬 */
   }
 
+  /* About 영역은 이미지와 텍스트를 좌우로 배치합니다. */
   .about-content {
     flex-direction: row;
     /* 태블릿 이상에서 자기소개를 가로 배치 */
@@ -741,30 +826,38 @@ footer {
     /* 자기소개 텍스트를 왼쪽 정렬 */
   }
 
-  /* Grid의 꽃: 태블릿 이상부터 2~3줄 자동 맞춤 */
+  /* 프로젝트 카드는 화면 너비에 따라 자동으로 여러 열을 구성합니다. */
   .projects-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     /* 카드가 최소 300px을 유지하며 자동으로 여러 열 배치 */
   }
 }
 
-/* --- 데스크톱 (Min-Width : 1024px 이상) --- */
+/* =============================
+   데스크톱 세부 조정
+   넓은 화면에서 읽기 폭과 간격을 조금 더 다듬습니다.
+   ============================= */
 @media (min-width: 1024px) {
+
+  /* 전체 콘텐츠 폭을 조금 좁혀 시선 이동이 과하게 길어지지 않도록 합니다. */
   .container {
     max-width: 1000px;
     /* 데스크톱 콘텐츠 최대 너비를 1000px로 제한 */
   }
 
+  /* 큰 화면에 맞춰 히어로 제목을 더 크게 보여줍니다. */
   .hero-content h1 {
     font-size: 4rem;
     /* 데스크톱 영웅 제목 크기 확대 */
   }
 
+  /* 데스크톱에서는 메뉴 간격을 더 넓혀 안정감을 줍니다. */
   .nav-list {
     gap: 2.5rem;
     /* 데스크톱 메뉴 링크 사이 간격 확대 */
   }
 
+  /* 섹션 세로 여백을 늘려 페이지가 더 여유 있어 보이게 합니다. */
   .section {
     padding: 7rem 0;
     /* 데스크톱 섹션의 위아래 여백 확대 */

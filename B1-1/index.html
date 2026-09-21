@@ -4,18 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 페이지 제목은 브라우저 탭과 검색 결과에서 보이는 기본 이름입니다. -->
   <title>데이터 엔지니어 포트폴리오</title>
-  <!-- 폰트 및 아이콘 -->
+  <!-- 아이콘과 웹폰트는 UI의 분위기와 가독성을 결정합니다. -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  <!-- CSS 및 JS 연결 -->
+  <!-- 외부 스타일과 스크립트를 연결합니다. -->
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js" defer></script>
 </head>
 
 <body>
 
-  <!-- 헤더 & 네비게이션 -->
+  <!-- 상단 고정 헤더: 로고, 네비게이션, 테마 토글, 모바일 메뉴 버튼을 포함합니다. -->
   <header id="header">
     <div class="container nav-container"> <!-- 데스크탑처럼 넓은 모니터에서 화면이 무한히 양옆으로 찢어지지 않도록 가운데로 너비를 제한해 주는 클래스 -->
       <div class="logo">
@@ -23,7 +24,7 @@
       </div>
 
       <!-- 데스크톱 & 모바일 메뉴 -->
-      <nav class="nav-menu"> 
+      <nav class="nav-menu">
         <ul class="nav-list">
           <li><a href="#hero" class="nav-link">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
@@ -48,30 +49,33 @@
   </header>
 
   <main>
-    <!-- Hero 섹션 -->
+    <!-- 첫 화면 소개 영역입니다. 방문자가 가장 먼저 보는 핵심 메시지를 담습니다. -->
     <section id="hero" class="section hero-section">
       <div class="container hero-content fade-in"> <!-- fade-in 애니메이션 -->
-        <!-- 금융/데이터 직무에 맞는 헤드라인으로 변경 -->
         <h1>데이터에서 금융의 흐름을<br><span class="highlight">발굴하는</span> 엔지니어입니다.</h1>
         <p>신뢰할 수 있는 데이터 파이프라인과 비즈니스 인사이트를 구축합니다.</p>
         <div class="hero-buttons">
+          <!-- 프로젝트 목록으로 바로 이동합니다. -->
           <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+          <!-- 연락 영역으로 이동합니다. -->
           <a href="#contact" class="btn btn-outline">연락하기</a>
         </div>
       </div>
     </section>
 
-    <!-- About 섹션 -->
+    <!-- 자기소개 영역입니다. 배경, 관심 분야, 포트폴리오 제작 목적을 설명합니다. -->
     <section id="about" class="section">
       <div class="container fade-in">
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <div class="about-image">
+            <!-- 프로필 이미지는 시각적 신뢰감을 주는 보조 요소입니다. -->
             <img src="images/profile.jpg" alt="내 프로필 이미지" class="profile-img">
           </div>
           <div class="about-text">
+            <!-- 전문성을 보여주는 한 줄 소개입니다. -->
             <h3>정확한 데이터로 가치를 창출하는 분석가</h3>
-            <!-- 웹 기술을 배운 이유를 데이터 시각화/서비스화와 연결 -->
+            <!-- 기술 학습 이유와 목표를 설명하는 본문입니다. -->
             <p>금융 도메인의 대용량 데이터 처리와 머신러닝 모델링에 관심이 많습니다. 단순한 분석을 넘어 비즈니스 의사결정에 기여하는 데이터 파이프라인을 설계하는 것을 목표로 합니다. <br><br>
               본 포트폴리오는 분석한 금융 데이터를 향후 대시보드 및 웹 서비스로 직접 구현하고 시각화하기 위해 순수 웹 기술(HTML/CSS/JS)을 학습하여 직접 제작했습니다.</p>
           </div>
@@ -79,11 +83,11 @@
       </div>
     </section>
 
-    <!-- Skills 섹션 -->
+    <!-- 보유 기술을 요약하는 영역입니다. 관련 역량을 빠르게 파악하게 해줍니다. -->
     <section id="skills" class="section bg-light">
       <div class="container fade-in">
         <h2 class="section-title">Skills</h2>
-        <!-- 데이터 엔지니어링/분석 스킬과 웹 스킬을 혼합하여 작성 -->
+        <!-- 데이터 분석, 엔지니어링, 프론트엔드 기본기를 한눈에 볼 수 있도록 나열합니다. -->
         <ul class="skills-list">
           <li class="skill-item">Python (Pandas, Scikit-learn)</li>
           <li class="skill-item">SQL & Data Pipeline</li>
@@ -94,18 +98,18 @@
       </div>
     </section>
 
-    <!-- Projects 섹션 (GitHub API 연동 영역) -->
+    <!-- GitHub API 연동으로 프로젝트 목록을 동적으로 보여주는 영역입니다. -->
     <section id="projects" class="section">
       <div class="container fade-in">
         <h2 class="section-title">Projects</h2>
         <p class="section-subtitle">GitHub API를 연동하여 가져온 실시간 프로젝트 목록입니다.</p>
 
-        <!-- 필터 버튼이 들어갈 곳 (보너스 기능) -->
+        <!-- 언어별 필터 버튼이 JavaScript에 의해 동적으로 생성됩니다. -->
         <div id="project-filters" class="filters"></div>
 
-        <!-- 프로젝트 카드가 렌더링될 곳 -->
+        <!-- 프로젝트 카드가 표시되는 렌더링 영역입니다. -->
         <div id="projects-container" class="projects-grid">
-          <!-- 초기 로딩 상태 UI -->
+          <!-- 첫 화면에서는 데이터를 불러오는 상태를 사용자에게 보여줍니다. -->
           <div class="loading-state">
             <i class="fas fa-spinner fa-spin"></i>
             <p>프로젝트를 불러오는 중입니다...</p>
@@ -114,11 +118,12 @@
       </div>
     </section>
 
-    <!-- Contact 섹션 (폼 유효성 검사 영역) -->
+    <!-- 연락처 폼 영역입니다. 사용자가 메시지를 남기고 제출할 수 있습니다. -->
     <section id="contact" class="section bg-light">
       <div class="container fade-in">
         <h2 class="section-title">Contact</h2>
-        <form id="contact-form" class="contact-form" novalidate> <!--  -->
+        <form id="contact-form" class="contact-form" novalidate>
+          <!-- novalidate 속성은 브라우저 기본 유효성 검사를 비활성화하고, JS로 커스텀 유효성 검사를 수행하기 위해 사용됩니다. -->
           <div class="form-group">
             <label for="name">이름</label>
             <input type="text" id="name" name="name" placeholder="이름을 입력해주세요">
@@ -135,26 +140,29 @@
             <span class="error-message" id="message-error">메시지를 입력해주세요.</span>
           </div>
           <button type="submit" class="btn btn-primary btn-block">메시지 보내기</button>
+          <!-- 유효성 검사를 통과했을 때 잠깐 표시되는 피드백 메시지입니다. -->
           <p id="form-success" class="success-message" aria-live="polite">입력 내용이 확인되었습니다.</p>
         </form>
       </div>
     </section>
   </main>
 
-  <!-- 푸터 -->
+  <!-- 페이지 하단 푸터입니다. 저작권 정보와 외부 프로필 링크를 포함합니다. -->
   <footer>
     <div class="container footer-content">
       <p>&copy; 2026 MyPortfolio. All rights reserved.</p>
       <div class="social-links">
+        <!-- GitHub 프로필로 연결합니다. -->
         <a href="https://github.com/imyoman99" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i
             class="fab fa-github"></i></a>
+        <!-- LinkedIn 프로필로 연결합니다. -->
         <a href="https://www.linkedin.com/in/young-min-yoo-b69aa1438/" target="_blank" rel="noopener noreferrer"
           aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
   </footer>
 
-  <!-- 위로 가기 버튼 -->
+  <!-- 화면 상단으로 빠르게 이동하는 버튼입니다. JS가 스크롤 위치에 따라 노출을 제어합니다. -->
   <button id="scroll-top" aria-label="맨 위로 이동">
     <i class="fas fa-arrow-up"></i>
   </button>
