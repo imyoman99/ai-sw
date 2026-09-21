@@ -1,11 +1,23 @@
-# 📊 Data Engineer Portfolio - Web Dashboard Foundation
+<div align="center">
 
-> **금융 데이터 분석 및 파이프라인 구축 역량을 웹 서비스로 확장하기 위한 포트폴리오 웹사이트입니다.**
-> 데이터 수집, 정제, 시각화로 이어지는 데이터 파이프라인의 최종 단계인 '사용자 인터랙션 및 프론트엔드 렌더링'의 핵심 원리를 이해하고자, 외부 라이브러리 없이 순수 바닐라 웹 기술(HTML/CSS/JS)만을 활용하여 구축했습니다.
+# 📊 Data Engineer Portfolio
+
+<p><strong>금융 도메인의 문제를 데이터로 풀어가는 엔지니어입니다.</strong><br>
+금융 데이터의 수집·정제·분석과 신뢰할 수 있는 파이프라인 설계에 관심을 두고 있으며,<br>
+데이터가 실제 의사결정과 서비스 경험으로 이어지는 과정을 고민합니다.</p>
+
+<p align="center">
+   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
+   <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
+   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
+   <img src="https://img.shields.io/badge/GitHub%20API-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub API">
+</p>
+
+</div>
 
 ## 🔗 배포 및 확인
-- **배포 URL:** [https://imyoman99.github.io/my-portfolio/](https://imyoman99.github.io/my-portfolio/) *(본인의 실제 배포 링크로 수정하세요)*
-- **GitHub 저장소:** [https://github.com/imyoman99/my-portfolio](https://github.com/imyoman99/my-portfolio) *(실제 저장소 링크로 수정하세요)*
+- **배포 URL:** [https://imyoman99.github.io/ai-sw/](https://imyoman99.github.io/ai-sw/) 
+- **GitHub 저장소:** [https://github.com/imyoman99/ai-sw](https://github.com/imyoman99/ai-sw) 
 
 ---
 
@@ -17,12 +29,67 @@
 
 ---
 
-## 📸 스크린샷 (Screenshots)
-*(아래 텍스트를 지우고 실제 캡처한 이미지 파일 경로를 넣어주세요)*
+## 🎤 평가 문항 답변
 
-|                     데스크톱 화면 (Light)                     |                     데스크톱 화면 (Dark)                     |               모바일 화면 & 햄버거 메뉴                |
-| :-----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------: |
-| `<img src="images/screenshot-desktop-light.png" width="300">` | `<img src="images/screenshot-desktop-dark.png" width="300">` | `<img src="images/screenshot-mobile.png" width="150">` |
+### 항목 1. 구현 기능과 동작 확인
+
+- **반응형 레이아웃:** 기본 스타일을 모바일 기준으로 작성하고, `768px`와 `1024px` 미디어 쿼리에서 내비게이션과 프로젝트 Grid 레이아웃을 변경합니다. 브라우저 폭을 줄이면 데스크톱 메뉴가 햄버거 메뉴로 바뀌고, 프로젝트 카드가 한 열로 배치됩니다.
+- **테마 전환:** `theme-toggle` 버튼의 `click` 이벤트에서 `STATE.theme`을 `dark` 또는 `light`로 바꾸고 `applyTheme()`을 호출합니다. 테마 값은 `localStorage`에 저장되므로 페이지를 다시 열 때 초기 상태로 읽어옵니다.
+- **메뉴와 스크롤 기능:** 햄버거 버튼은 `.nav-menu`의 `active` 클래스를 켜고 끕니다. 스크롤 위치에 따라 헤더와 맨 위로 가기 버튼의 클래스를 변경하며, `IntersectionObserver`는 화면에 들어온 `.fade-in` 요소에 `appear` 클래스를 추가합니다.
+- **GitHub API:** `fetchProjects()`가 API를 호출하기 전에 `loading` 상태를 저장하고, 응답 결과에 따라 `success`, `empty`, `error` 상태를 설정합니다. `renderProjects()`는 상태에 따라 로딩 화면, 프로젝트 카드, 빈 상태 또는 에러 화면을 표시합니다. 재요청을 시작할 때는 기존 필터를 비우고, 프로젝트 이름과 설명은 HTML 특수문자를 처리한 뒤 화면에 표시합니다.
+- **폼 검사:** form의 기본 브라우저 검증을 끄고 제출 이벤트에서 이름의 공백 여부, 이메일 정규식, 메시지의 공백 여부를 확인합니다. 문제가 있는 입력에는 `invalid` 클래스를 추가하고 오류 문구를 표시하며, 입력이 다시 시작되면 해당 클래스를 제거합니다. 검증을 통과하면 실제 서버 전송 없이 입력 확인 메시지를 표시합니다.
+
+### 항목 2. 파일 분리와 기본 구조
+
+- **파일을 분리한 이유:** `index.html`은 문서 구조와 콘텐츠, `css/style.css`는 화면 스타일과 반응형 규칙, `js/main.js`는 상태 관리와 이벤트 및 렌더링 로직을 담당하도록 나누었습니다. 각 파일의 역할이 달라지므로 수정할 범위를 찾기 쉽고 구조와 동작을 구분해서 관리할 수 있습니다.
+- **시맨틱 태그:** `header`에는 사이트 상단과 메뉴를, `nav`에는 페이지 이동 링크를, `main`에는 핵심 콘텐츠를, `section`에는 About·Skills·Projects·Contact 영역을, `footer`에는 하단 정보를 배치했습니다. 태그의 역할과 콘텐츠 영역이 일치하도록 문서 구조를 구성했습니다.
+- **CSS 변수:** `:root`에 배경색, 글자색, 테두리색, 카드 배경색, 그림자, 포커스·오류·성공 색상, 전환 효과를 변수로 정의하고 다크 모드에서 필요한 값만 다시 지정했습니다. 같은 값을 여러 곳에서 사용할 때 한 곳에서 수정할 수 있고, 라이트·다크 테마의 차이를 관리하기 쉽습니다.
+- **`addEventListener`와 인라인 이벤트:** `addEventListener`는 HTML 구조와 JavaScript 동작을 분리하고, 하나의 요소에 여러 이벤트를 연결하거나 이벤트를 코드에서 관리할 수 있습니다. 이 프로젝트의 테마, 메뉴, 스크롤, 폼, API 재시도 이벤트는 `addEventListener`로 연결했습니다.
+
+### 항목 3. 코드 흐름과 자료 처리
+
+- **이벤트 → 상태 변경 → 화면 업데이트 예시:** 테마 버튼을 클릭하면 `STATE.theme`을 변경하고 `localStorage`에 저장한 뒤 `applyTheme()`에서 `data-theme` 속성과 아이콘을 갱신합니다. API 필터 버튼도 클릭한 언어를 `STATE.projects.filter`에 저장한 후 `renderFilters()`와 `renderProjects()`를 다시 호출합니다.
+- **`async/await`와 `try/catch`:** `fetchProjects()`는 `await fetch()`로 GitHub 응답을 기다립니다. `res.ok`가 false이면 에러를 발생시키고, 정상 응답이면 JSON을 읽어 프로젝트 데이터와 상태를 저장합니다. 네트워크 오류나 API 오류는 `catch`에서 `error` 상태로 바꾸고 재시도 UI를 표시합니다. 재시도 버튼은 `projects-container`의 이벤트 위임으로 처리합니다.
+- **`filter`와 `map`:** 먼저 `filter()`로 선택한 언어에 해당하는 저장소만 추립니다. 이어서 `map()`으로 각 저장소의 이름, 설명, 언어, 별 개수를 HTML 카드 템플릿으로 변환하고 `projects-container`에 삽입합니다.
+- **Flexbox와 Grid:** 헤더 내비게이션과 버튼처럼 한 방향으로 배치하는 요소에는 Flexbox를 사용했습니다. 프로젝트 카드처럼 여러 행과 열로 배치되는 목록에는 Grid의 `auto-fit`과 `minmax()`를 사용했습니다.
+
+### 항목 4. 상태 관리와 모바일 퍼스트
+
+- **`STATE` 객체를 사용하는 이유:** 테마, API 원본 데이터, 요청 상태, 오류 메시지, 필터 값을 하나의 객체에서 관리하면 이벤트 핸들러와 렌더링 함수가 같은 상태를 참조할 수 있습니다. 여러 개의 전역 변수로 나누는 것보다 어떤 값이 화면에 영향을 주는지 추적하기 쉽습니다. 이 프로젝트에서는 상태를 직접 변경한 뒤 관련 렌더링 함수를 호출하는 방식으로 사용합니다.
+- **모바일 퍼스트를 선택한 이유:** 작은 화면에서 필요한 기본 레이아웃을 먼저 작성한 뒤 `768px`, `1024px` 미디어 쿼리에서 가로 메뉴, 버튼 정렬, 프로젝트 다중 열 레이아웃을 추가했습니다. 콘텐츠와 기본 동작을 먼저 구성하고 화면이 넓어질 때 배치를 확장하는 순서입니다.
+
+---
+
+## 📸 스크린샷 (Screenshots)
+
+<table>
+   <tr>
+      <th colspan="2">데스크톱 화면</th>
+   </tr>
+   <tr>
+      <td align="center">
+         <a href="images/screenshot-desktop-light.png"><img src="images/screenshot-desktop-light.png" width="360" style="border-radius: 8px;" alt="데스크톱 라이트 모드 화면"></a><br>
+         <strong>Light Mode</strong>
+      </td>
+      <td align="center">
+         <a href="images/screenshot-desktop-dark.png"><img src="images/screenshot-desktop-dark.png" width="360" style="border-radius: 8px;" alt="데스크톱 다크 모드 화면"></a><br>
+         <strong>Dark Mode</strong>
+      </td>
+   </tr>
+   <tr>
+      <th colspan="2">모바일 화면</th>
+   </tr>
+   <tr>
+      <td align="center">
+         <a href="images/screenshot-mobile-light.png"><img src="images/screenshot-mobile-light.png" width="180" style="border-radius: 8px;" alt="모바일 라이트 모드 화면"></a><br>
+         <strong>Light Mode</strong>
+      </td>
+      <td align="center">
+         <a href="images/screenshot-mobile-dark.png"><img src="images/screenshot-mobile-dark.png" width="180" style="border-radius: 8px;" alt="모바일 다크 모드 화면"></a><br>
+         <strong>Dark Mode</strong>
+      </td>
+   </tr>
+</table>
 
 ---
 
@@ -30,12 +97,12 @@
 
 1. **GitHub API 동적 연동 및 상태 처리**
    - Fetch API를 이용해 실시간 프로젝트 목록을 동적으로 렌더링합니다.
-   - 외부 데이터 수집 시 발생할 수 있는 4가지 상태(로딩 중 / 성공 / 실패(에러) / 빈 데이터)를 분기하여 사용자 친화적인 UI로 피드백을 제공합니다.
+   - API 요청 상태를 로딩 중 / 성공 / 실패(에러) / 빈 데이터로 나누어 각 상태에 맞는 UI를 표시합니다.
 2. **다크 모드 (Dark Mode)**
    - 테마 토글 버튼을 통해 라이트/다크 모드가 전환됩니다.
-   - `localStorage`를 활용하여 사용자의 테마 설정이 새로고침 후에도 영구적으로 유지됩니다.
+   - `localStorage`에 테마 설정을 저장하여 새로고침 후에도 같은 테마를 적용합니다.
 3. **반응형 웹 디자인 (Responsive Design)**
-   - 모바일, 태블릿(768px), 데스크톱(1024px) 해상도에 맞춰 레이아웃이 최적화됩니다.
+   - 768px와 1024px 기준의 미디어 쿼리로 모바일, 태블릿, 데스크톱 레이아웃을 구성합니다.
    - 모바일 환경에서는 내비게이션이 숨겨지고 햄버거 메뉴(Hamburger Menu)가 활성화됩니다.
 4. **폼 유효성 검사 (Form Validation)**
    - Contact 섹션에서 빈 필드 제출을 방지하고 이메일 정규식 패턴을 검증합니다.
@@ -48,29 +115,28 @@
 
 ## 📐 아키텍처 및 기술적 의사결정 (Technical Decisions)
 
-본 프로젝트는 단순한 화면 구현을 넘어, 데이터 엔지니어 관점에서 확장성과 유지보수성을 고려한 **'이벤트 → 상태 업데이트 → 렌더링'** 패턴을 설계하는 데 집중했습니다.
+본 프로젝트는 **'이벤트 → 상태 업데이트 → 렌더링'** 흐름을 중심으로 화면 동작을 구현했습니다.
 
 ### 1. 단일 진실 공급원(SSOT) 기반의 상태 관리
-흩어져 있는 전역 변수를 지양하고, `STATE`라는 단일 객체를 생성하여 테마 설정, API 원본 데이터, 필터링 상태, 에러 메시지 등을 중앙 집중적으로 관리했습니다. 
+테마 설정, API 원본 데이터, 필터링 상태, 에러 메시지를 `STATE` 객체에서 관리했습니다.
 - **흐름:** 사용자의 클릭(Event) 발생 ➔ `STATE` 객체의 데이터 갱신(State Update) ➔ 갱신된 데이터를 바탕으로 화면 재조립(Render). 
-- 이는 데이터를 가공하여 파생 뷰(View)를 만들어내는 데이터 파이프라인의 원리와 같으며, 향후 React 등 상태 기반 프레임워크 도입을 위한 탄탄한 기초 설계입니다.
+- 상태가 변경되면 해당 상태를 기준으로 필터 버튼과 프로젝트 목록을 다시 렌더링합니다.
 
 ### 2. 비동기 데이터 처리와 예외 통제 (`async/await`, `try/catch`)
-비동기 외부 API 통신 시 발생할 수 있는 네트워크 지연 및 Rate Limit(403) 제한을 완벽하게 통제했습니다.
-- `async/await`를 통해 비동기 흐름을 동기적으로 직관화했습니다.
-- `try/catch` 블록 내에서 `!res.ok`를 통해 API 통신 실패를 명시적 에러로 `throw`하고, 이를 `catch`에서 잡아내어 사용자가 당황하지 않도록 "에러 발생 및 재시도 버튼" 뷰를 렌더링하도록 분기했습니다.
+외부 GitHub API를 `async/await`와 `try/catch`로 호출하고 응답 상태에 따라 화면을 분기했습니다.
+- `!res.ok`인 응답은 에러로 처리하고, `catch`에서 에러 메시지와 재시도 버튼을 렌더링합니다.
 
 ### 3. 데이터 전처리를 위한 배열 메서드 (`map`, `filter`)
 - API로 수신한 JSON 배열 데이터에서 `filter()`를 이용해 특정 언어(Language) 조건에 맞는 데이터 서브셋(Subset)을 추출했습니다.
-- 이후 `map()` 메서드를 활용해 각 데이터 객체를 HTML 템플릿 리터럴로 치환하여 DOM에 주입했습니다. 이는 Raw Data를 대시보드 시각화 포맷으로 변환(Transformation)하는 과정과 완벽히 일치합니다.
+- 이후 `map()` 메서드를 활용해 각 데이터 객체를 HTML 템플릿 리터럴로 치환하여 DOM에 주입했습니다. 프로젝트 이름·설명·언어·별 개수는 `escapeHtml()`로 처리하고, 저장소 주소는 `getSafeRepositoryUrl()`에서 HTTPS GitHub 주소인지 확인합니다.
 
 ### 4. 시맨틱 마크업과 관심사의 분리
-- `<header>`, `<main>`, `<section>`, `<footer>` 등 시맨틱 태그를 활용해 문서 구조를 명확히 했습니다. 이는 웹 접근성(A11y)과 SEO를 높일 뿐만 아니라, 훗날 웹 크롤링 등 데이터 수집 시 노이즈를 최소화하는 정형화된 메타데이터 역할을 합니다.
-- HTML 인라인 이벤트(`onclick`)를 철저히 배제하고 JS에서 `addEventListener`로 동작을 바인딩하여 데이터 추적(Tracking Code) 및 로직의 독립성을 확보했습니다.
+- `<header>`, `<main>`, `<section>`, `<footer>` 등 시맨틱 태그로 문서 구조를 구성했습니다.
+- HTML 인라인 이벤트 대신 JavaScript의 `addEventListener`로 사용자 이벤트를 연결했습니다.
 
 ### 5. Layout & Styling: Flexbox vs Grid, CSS Variables
-- **Flexbox & Grid:** 1차원 선형 배치가 필요한 내비게이션에는 Flexbox를, 2차원 교차 배치가 필요한 Projects 카드 목록에는 Grid(`auto-fit`, `minmax`)를 사용하여 디바이스 크기에 자동으로 적응하는 유연한 데이터 대시보드 UI를 구축했습니다.
-- **CSS Variables & Mobile-First:** 색상 및 레이아웃 규격을 `:root` 변수로 통일하여 유지보수성을 극대화했습니다. 또한, 핵심 데이터(콘텐츠)가 가장 잘 보여야 하는 모바일을 기준으로 기본 스타일을 작성(Mobile-First)하고, 미디어 쿼리로 데스크톱 레이아웃을 덧붙이는(Scale-up) 방식으로 브라우저 렌더링 리소스를 최적화했습니다.
+- **Flexbox & Grid:** 내비게이션에는 Flexbox를, Projects 카드 목록에는 Grid(`auto-fit`, `minmax`)를 사용해 화면 크기에 따라 레이아웃이 바뀌도록 구성했습니다.
+- **CSS Variables & Mobile-First:** 색상 값을 `:root` 변수로 관리하고, 모바일 기본 스타일에 미디어 쿼리를 추가하는 방식으로 레이아웃을 구성했습니다. 키보드 포커스 표시, 섹션 앵커 위치 보정, 입력창 크기 조절 스타일도 CSS로 지정했습니다.
 
 ---
 
@@ -83,5 +149,5 @@
 ---
 
 ## 💡 회고 및 향후 계획
-금융 데이터의 수집과 모델링에 집중하던 관점에서 벗어나, 분석된 데이터가 클라이언트 단(Front-end)에서 어떻게 상태로 관리되고 화면에 매핑되는지 그 본질을 깊이 이해할 수 있었습니다.
+금융 데이터의 수집과 모델링에 집중하던 관점에서 벗어나 분석된 데이터가 클라이언트 단(Front-end)에서 어떻게 상태로 관리되고 화면에 매핑되는지 그 본질을 깊이 이해할 수 있었습니다.
 이 포트폴리오를 기반으로, 향후 Python으로 분석한 금융 데이터를 DB에 적재하고, 이를 API로 끌어와 실시간 렌더링하는 **풀스택 데이터 대시보드 웹 서비스**로 확장해 나갈 계획입니다.

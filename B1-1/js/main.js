@@ -31,17 +31,29 @@ function init() {
   fetchProjects();
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function getSafeRepositoryUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === 'github.com' ? url.href : 'https://github.com';
+  } catch {
+    return 'https://github.com';
+  }
+}
+
 // ==========================================
 // 4. 이벤트 -> 상태 변경 -> 렌더링 패턴
 // ==========================================
 
 // [테마 관리] 이벤트 발생 -> 상태 변경 -> UI 렌더링
-els.themeBtn.addEventListener('click', () => {
-  STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('theme', STATE.theme);
-  applyTheme(STATE.theme);
-});
-
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const icon = els.themeBtn.querySelector('i');
@@ -51,6 +63,8 @@ function applyTheme(theme) {
 // [API 연동] 상태 관리에 따른 비동기 처리
 async function fetchProjects() {
   STATE.projects.status = 'loading';
+  STATE.projects.errorMsg = null;
+  els.filters.replaceChildren();
   renderProjects(); // 로딩 UI 그리기
 
   try {
@@ -76,12 +90,12 @@ function renderFilters() {
   const langs = ['All', ...new Set(STATE.projects.data.map(p => p.language).filter(Boolean))];
 
   els.filters.innerHTML = langs.map(lang =>
-    `<button class="filter-btn ${STATE.projects.filter === lang ? 'active' : ''}" data-lang="${lang}">${lang}</button>`
+    `<button class="filter-btn ${STATE.projects.filter === lang ? 'active' : ''}" data-lang="${escapeHtml(lang)}">${escapeHtml(lang)}</button>`
   ).join('');
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      STATE.projects.filter = e.target.dataset.lang; // 상태 업데이트
+      STATE.projects.filter = e.currentTarget.dataset.lang; // 상태 업데이트
       renderFilters();  // 버튼 액티브 상태 재렌더링
       renderProjects(); // 프로젝트 리스트 재렌더링
     });
@@ -96,10 +110,11 @@ function renderProjects() {
     return;
   }
   if (status === 'error') {
-    els.projContainer.innerHTML = `<div class="error-state"><p>에러 발생: ${errorMsg}</p><button class="btn btn-outline" onclick="fetchProjects()">재시도</button></div>`;
+    els.projContainer.innerHTML = `<div class="error-state"><p>에러 발생: ${escapeHtml(errorMsg)}</p><button class="btn btn-outline" data-action="retry-projects">재시도</button></div>`;
     return;
   }
   if (status === 'empty') {
+    els.filters.replaceChildren();
     els.projContainer.innerHTML = `<div class="empty-state">표시할 프로젝트가 없습니다.</div>`;
     return;
   }
@@ -109,13 +124,14 @@ function renderProjects() {
 
   els.projContainer.innerHTML = filteredData.map(repo => {
     const { name, description, html_url, stargazers_count, language } = repo;
+    const safeUrl = escapeHtml(getSafeRepositoryUrl(html_url));
     return `
       <article class="project-card">
-        <h3><a href="${html_url}" target="_blank">${name}</a></h3>
-        <p>${description || '설명이 없습니다.'}</p>
+        <h3><a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(name)}</a></h3>
+        <p>${escapeHtml(description || '설명이 없습니다.')}</p>
         <div class="project-meta">
-          <span><i class="fas fa-code"></i> ${language || 'Unknown'}</span>
-          <span><i class="fas fa-star"></i> ${stargazers_count}</span>
+          <span><i class="fas fa-code"></i> ${escapeHtml(language || 'Unknown')}</span>
+          <span><i class="fas fa-star"></i> ${escapeHtml(stargazers_count)}</span>
         </div>
       </article>
     `;
@@ -126,10 +142,20 @@ function renderProjects() {
 // 5. 기타 UI 이벤트 바인딩
 // ==========================================
 function bindEvents() {
+  els.themeBtn.addEventListener('click', () => {
+    STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', STATE.theme);
+    applyTheme(STATE.theme);
+  });
+
   // 햄버거 메뉴
   els.hamburger.addEventListener('click', () => els.nav.classList.toggle('active'));
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => els.nav.classList.remove('active'));
+  });
+
+  els.projContainer.addEventListener('click', (e) => {
+    if (e.target.closest('[data-action="retry-projects"]')) fetchProjects();
   });
 
   // 스크롤 이벤트
@@ -176,9 +202,10 @@ function validateForm(e) {
   checkValid(message, message.value.trim() === '');
 
   if (isValid) {
-    document.getElementById('form-success').style.display = 'block';
+    const successMessage = document.getElementById('form-success');
+    successMessage.style.display = 'block';
     els.form.reset();
-    setTimeout(() => document.getElementById('form-success').style.display = 'none', 3000);
+    setTimeout(() => successMessage.style.display = 'none', 3000);
   }
 }
 

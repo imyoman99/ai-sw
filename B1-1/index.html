@@ -19,7 +19,7 @@
   <header id="header">
     <div class="container nav-container">
       <div class="logo">
-        <a href="#hero">MyPortfolio</a>
+        <a href="index.html">MyPortfolio</a>
       </div>
 
       <!-- 데스크톱 & 모바일 메뉴 -->
@@ -117,7 +117,7 @@
     <section id="contact" class="section bg-light">
       <div class="container fade-in">
         <h2 class="section-title">Contact</h2>
-        <form id="contact-form" class="contact-form">
+        <form id="contact-form" class="contact-form" novalidate>
           <div class="form-group">
             <label for="name">이름</label>
             <input type="text" id="name" name="name" placeholder="이름을 입력해주세요">
@@ -134,7 +134,7 @@
             <span class="error-message" id="message-error">메시지를 입력해주세요.</span>
           </div>
           <button type="submit" class="btn btn-primary btn-block">메시지 보내기</button>
-          <p id="form-success" class="success-message">성공적으로 전송되었습니다!</p>
+          <p id="form-success" class="success-message" aria-live="polite">입력 내용이 확인되었습니다.</p>
         </form>
       </div>
     </section>

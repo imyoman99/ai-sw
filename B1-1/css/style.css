@@ -9,6 +9,10 @@
   --border-color: #e9ecef;
   --card-bg: #ffffff;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --focus-color: #0056b3;
+  --error-color: #c62828;
+  --success-color: #2e7d32;
+  --success-bg: #edf7ee;
   --transition: all 0.3s ease;
 }
 
@@ -20,6 +24,10 @@
   --border-color: #333333;
   --card-bg: #242424;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --focus-color: #80bfff;
+  --error-color: #ff8a80;
+  --success-color: #81c784;
+  --success-bg: #1d3322;
 }
 
 * {
@@ -57,6 +65,15 @@ ul {
 
 .section {
   padding: 5rem 0;
+  scroll-margin-top: 70px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
 }
 
 .section-title {
@@ -335,19 +352,33 @@ header.scrolled {
 
 .form-group input,
 .form-group textarea {
+  display: block;
   width: 100%;
   padding: 0.8rem;
+  font: inherit;
   border: 1px solid var(--border-color);
   border-radius: 5px;
   background-color: var(--card-bg);
   color: var(--text-primary);
 }
 
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-color) 20%, transparent);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
 .error-message {
   display: none;
-  color: red;
+  color: var(--error-color);
   font-size: 0.8rem;
+  line-height: 1.4;
   margin-top: 0.3rem;
+  margin-left: 0.35rem;
 }
 
 .form-group.invalid .error-message {
@@ -356,12 +387,17 @@ header.scrolled {
 
 .form-group.invalid input,
 .form-group.invalid textarea {
-  border-color: red;
+  border-color: var(--error-color);
 }
 
 .success-message {
   display: none;
-  color: green;
+  color: var(--success-color);
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-color);
+  border-left-width: 4px;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
   text-align: center;
   margin-top: 1rem;
   font-weight: bold;
